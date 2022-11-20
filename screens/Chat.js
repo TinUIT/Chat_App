@@ -68,7 +68,7 @@ const Chat = ({ navigation, route }) => {
             marginRight: 20,
           }}
         >
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("VideoChat")}>
             <FontAwesome name="video-camera" size={24} color="white" />
           </TouchableOpacity>
           <TouchableOpacity>

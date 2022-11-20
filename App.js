@@ -7,6 +7,7 @@ import RegisterScreen from "./screens/RegisterScreen";
 import HomeScreen from "./screens/HomeScreen";
 import AddChat from "./screens/AddChat";
 import Chat from "./screens/Chat";
+import VideoChat from "./screens/VideoChat";
 const Stack = createStackNavigator();
 
 const globalScreenOptions = {
@@ -24,6 +25,7 @@ export default function App() {
         <Stack.Screen name="AddChat" component={AddChat} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="VideoChat" component={VideoChat} />
       </Stack.Navigator>
     </NavigationContainer>
   );

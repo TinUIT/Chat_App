@@ -2,9 +2,9 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useLayoutEffect } from "react";
 import { Button, Input } from "@rneui/themed";
-import  useState  from "react";
-import  Entypo  from "react-native-vector-icons/Entypo";
-import  db  from "../firebase";
+import { useState } from "react";
+import Entypo  from "react-native-vector-icons/Entypo";
+import { db } from "../firebase";
 
 const AddChat = ({ navigation }) => {
   const [input, setInput] = useState("");
