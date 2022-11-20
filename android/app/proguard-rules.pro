@@ -8,4 +8,7 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
+<<<<<<< HEAD
+=======
 -keep class org.webrtc.** { *; }
+>>>>>>> affa831 (20/11)

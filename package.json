@@ -17,14 +17,21 @@
     "antd": "^4.23.6",
     "firebase": "^9.12.1",
     "react": "18.1.0",
+<<<<<<< HEAD
+=======
     "react-dom": "^18.2.0",
+>>>>>>> affa831 (20/11)
     "react-native": "0.70.4",
     "react-native-gesture-handler": "^2.8.0",
     "react-native-image-picker": "^4.10.0",
     "react-native-safe-area-context": "^4.4.1",
     "react-native-screens": "^3.18.2",
+<<<<<<< HEAD
+    "react-native-vector-icons": "^9.2.0"
+=======
     "react-native-vector-icons": "^9.2.0",
     "react-native-webrtc": "^106.0.0-beta.6"
+>>>>>>> affa831 (20/11)
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
