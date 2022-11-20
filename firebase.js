@@ -16,10 +16,7 @@ let app;
 
 if (firebase.apps.length === 0) {
   app = firebase.initializeApp(firebaseConfig);
-<<<<<<< HEAD
-=======
   firebase.firestore().settings({ experimentalForceLongPolling: true, merge: true, });
->>>>>>> affa831 (20/11)
 } else {
   app = firebase.app();
 }
