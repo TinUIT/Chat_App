@@ -109,7 +109,7 @@ const Chat = ({ navigation, route }) => {
   }, [route]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#F2C2CF" }}>
       <StatusBar style="light" />
 
       <KeyboardAvoidingView
@@ -158,7 +158,7 @@ const Chat = ({ navigation, route }) => {
                 onSubmitEditing={sendMessage}
               />
               <TouchableOpacity onPress={sendMessage}>
-                <Ionicons name="send" size={24} color="#2B68E6" />
+                <Ionicons name="send" size={24} color="#F26398" />
               </TouchableOpacity>
             </View>
           </>
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
   sender: {
     padding: 15,
-    backgroundColor: "#2B68E6",
+    backgroundColor: "#FEADB9",
     alignSelf: "flex-start",
     borderRadius: 20,
     margin: 15,
