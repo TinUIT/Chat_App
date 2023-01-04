@@ -8,6 +8,7 @@ import HomeScreen from "./screens/HomeScreen";
 import AddChat from "./screens/AddChat";
 import Chat from "./screens/Chat";
 import VideoChat from "./screens/VideoChat";
+import EditProfile from "./screens/EditProfile";
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="VideoChat" component={VideoChat} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
       </Stack.Navigator>
     </NavigationContainer>
   );
