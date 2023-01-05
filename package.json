@@ -3,7 +3,7 @@
   "version": "0.0.1",
 
   "private": true,
-  "scripts": {
+      "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -15,14 +15,11 @@
     "@react-navigation/stack": "^6.3.4",
     "@rneui/base": "^4.0.0-rc.7",
     "@rneui/themed": "^4.0.0-rc.7",
-    "antd": "^4.23.6",
-    "firebase": "^9.12.1",
-    "react": "18.1.0",
-<<<<<<< HEAD
-=======
+    "antd": "^5.0.0",
+    "firebase": "^9.14.0",
+    "react": "18.2.0",
     "react-dom": "^18.2.0",
->>>>>>> affa831 (20/11)
-    "react-native": "0.70.4",
+    "react-native": "0.70.6",
     "react-native-gesture-handler": "^2.8.0",
     "react-native-image-picker": "^4.10.1",
     "react-native-safe-area-context": "^4.4.1",
