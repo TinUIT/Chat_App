@@ -58,8 +58,8 @@ const HomeScreen = ({ navigation }) => {
       headerTintColor: "black",
       headerLeft: () => (
         <View style={{ marginLeft: 20 }}>
-          <TouchableOpacity onPress={signOutUser}>
-            <Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} />
+          <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
+          <Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} />
           </TouchableOpacity>
         </View>
       ),
@@ -80,6 +80,13 @@ const HomeScreen = ({ navigation }) => {
               name="pencil"
               size={24}
               color="black"
+            ></SimpleLineIcons>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={signOutUser}>
+            <SimpleLineIcons
+              name="logout"
+              size={24}
+              color="while"
             ></SimpleLineIcons>
           </TouchableOpacity>
         </View>
