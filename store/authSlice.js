@@ -13,6 +13,7 @@ const authSlice = createSlice({
             state.token = payload.token;
             state.userData = payload.userData;
             state.didTryAutoLogin = true;
+            console.log(state.userData)
         },
         setDidTryAutoLogin: (state, action) => {
             state.didTryAutoLogin = true;

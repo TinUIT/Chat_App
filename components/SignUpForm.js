@@ -103,13 +103,14 @@ const SignUpForm = props => {
                     onInputChanged={inputChangedHandler}
                     errorText={formState.inputValidities["password"]} />
                 
-                <Input
+                {/* <Input
                     label="Confirm Password"
                     icon="lock"
                     autoCapitalize="none"
                     secureTextEntry
                     iconPack={Feather}
-                    onInputChanged={inputChangedHandler} />
+                    onInputChanged={inputChangedHandler}
+                    errorText={formState.inputValidities["password"]} /> */}
                 {
                     isLoading ? 
                     <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :

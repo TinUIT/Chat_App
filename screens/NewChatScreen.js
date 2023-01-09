@@ -155,7 +155,7 @@ const NewChatScreen = props => {
             <TextInput
                 placeholder='Search'
                 style={styles.searchBox}
-                onChangeText={(text) => setSearchTerm(text)}
+                onChangeText={(text) => {setSearchTerm(text); setChatName(text)}}
             />
         </View>
 

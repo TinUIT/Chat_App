@@ -76,7 +76,7 @@ const SignInForm = props => {
                     icon="lock"
                     iconPack={Feather}
                     autoCapitalize="none"
-                    secureTextEntry
+                    secureTextEntry 
                     onInputChanged={inputChangedHandler}
                     initialValue={formState.inputValues.password}
                     errorText={formState.inputValidities["password"]} />       

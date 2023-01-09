@@ -14,7 +14,7 @@ export const launchImagePicker = async () => {
         quality: 1
     });
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
         return result.uri;
     }
 }
@@ -35,7 +35,7 @@ export const openCamera = async () => {
         quality: 1
     });
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
         return result.uri;
     }
 }
