@@ -2,13 +2,18 @@ import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
 import { Feather } from '@expo/vector-icons';
-import {  StyleSheet, View} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducer';
 import { signIn } from '../utils/actions/authActions';
 import { ActivityIndicator, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import colors from '../constants/colors';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
+import CustomHeaderButton from './CustomHeaderButton';
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { getFirebaseApp } from '../utils/firebaseHelper';
+
 
 const isTestMode = false;
 
@@ -30,6 +35,7 @@ const SignInForm = props => {
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
+    // const [email, setEmail] = useState(null);
 
     const inputChangedHandler = useCallback((inputId, inputValue) => {
         const result = validateInput(inputId, inputValue);
@@ -57,47 +63,78 @@ const SignInForm = props => {
             setIsLoading(false);
         }
     }, [dispatch, formState]);
+    const resetPassword = useCallback(async () => {
+        console.log(formState.inputValues.email);
+        if ( formState.inputValues.email!= null) {
+            const app = getFirebaseApp();
+            const auth = getAuth(app);
+            sendPasswordResetEmail(auth,formState.inputValues.email)
+                .then(() => {
+                    alert("Check email to reset password")
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
+        }
+        else { alert("Please enter a valid email") }
+
+
+    }, [dispatch,formState]);
 
     return (
-            <View style={styles.InputCover}>
-                <Input
-                    id="email"
-                    label="Email"
-                    icon="mail"
-                    iconPack={Feather}
-                    autoCapitalize="none"
-                    keyboardType="email-address"
-                    onInputChanged={inputChangedHandler}
-                    initialValue={formState.inputValues.email}
-                    errorText={formState.inputValidities["email"]} />
-                <Input
-                    id="password"
-                    label="Password"
-                    icon="lock"
-                    iconPack={Feather}
-                    autoCapitalize="none"
-                    secureTextEntry 
-                    onInputChanged={inputChangedHandler}
-                    initialValue={formState.inputValues.password}
-                    errorText={formState.inputValidities["password"]} />       
-                {
-                    isLoading ? 
+        <View style={styles.InputCover}>
+            <Input
+                id="email"
+                label="Email"
+                icon="mail"
+                iconPack={Feather}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                onInputChanged={inputChangedHandler}
+                initialValue={formState.inputValues.email}
+                errorText={formState.inputValidities["email"]}
+                // value={email}
+
+            />
+            <Input
+                id="password"
+                label="Password"
+                icon="lock"
+                iconPack={Feather}
+                autoCapitalize="none"
+                secureTextEntry
+                onInputChanged={inputChangedHandler}
+                initialValue={formState.inputValues.password}
+                errorText={formState.inputValidities["password"]} />
+            <TouchableOpacity
+                style={{ alignItems: 'flex-end' }}
+                onPress={resetPassword}
+            >
+                <Text style={styles.link}>Forget password?</Text>
+
+            </TouchableOpacity>
+            {
+                isLoading ?
                     <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
                     <SubmitButton
                         title="Sign in"
                         onPress={authHandler}
                         style={{ marginTop: 20 }}
-                        disabled={!formState.formIsValid}/>
-                }
-            </View>
+                        disabled={!formState.formIsValid} />
+            }
+        </View>
     )
 };
 
 const styles = StyleSheet.create({
     InputCover: {
         marginTop: '10%',
-        width: 275,    
+        width: 275,
     },
+
 })
+
 
 export default SignInForm;
