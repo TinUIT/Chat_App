@@ -70,15 +70,15 @@ const SignInForm = props => {
             const auth = getAuth(app);
             sendPasswordResetEmail(auth,formState.inputValues.email)
                 .then(() => {
-                    alert("Check email to reset password")
+                    Alert.alert("Notify","Check email to reset password",[{ text: "OK" }])
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    alert(errorMessage);
+                    Alert.alert("Notify",errorMessage,[{ text: "OK" }])
                 });
         }
-        else { alert("Please enter a valid email") }
+        else {  Alert.alert("Notify","Please enter a valid email",[{ text: "OK" }]) }
 
 
     }, [dispatch,formState]);
