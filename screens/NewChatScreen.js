@@ -117,7 +117,6 @@ const NewChatScreen = props => {
                                 style={styles.textbox}
                                 placeholder="Enter a name for your chat"
                                 autoCorrect={false}
-                                autoComplete={false}
                                 onChangeText={text => setChatName(text)}
                             />
                         </View>
@@ -155,7 +154,7 @@ const NewChatScreen = props => {
             <TextInput
                 placeholder='Search'
                 style={styles.searchBox}
-                onChangeText={(text) => {setSearchTerm(text); setChatName(text)}}
+                onChangeText={(text) => {setSearchTerm(text)}}
             />
         </View>
 
@@ -248,7 +247,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         backgroundColor: colors.nearlyWhite,
         flexDirection: 'row',
-        borderRadius: 2
+        borderRadius: 10
     },
     textbox: {
         color: colors.textColor,

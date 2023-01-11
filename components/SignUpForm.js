@@ -66,8 +66,6 @@ const SignUpForm = props => {
                 formState.inputValues.lastName,
                 formState.inputValues.email,
                 formState.inputValues.password,
-                formState.inputValues.confirmPassword,
-                
             );
             console.log( formState.inputValues.password)
             console.log( formState.inputValues.confirmPassword)
