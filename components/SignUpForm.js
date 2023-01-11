@@ -2,13 +2,15 @@ import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
 import { Feather, FontAwesome } from '@expo/vector-icons';
-import {  StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducer';
 import { signUp } from '../utils/actions/authActions';
 import { ActivityIndicator, Alert } from 'react-native';
 import colors from '../constants/colors';
 import { useDispatch, useSelector } from 'react-redux';
+import { getAuth, sendEmailVerification } from "firebase/auth";
+import { getFirebaseApp } from '../utils/firebaseHelper';
 
 const initialState = {
     inputValues: {
@@ -16,12 +18,14 @@ const initialState = {
         lastName: "",
         email: "",
         password: "",
+        // confirmPassword:"",
     },
     inputValidities: {
         firstName: false,
         lastName: false,
         email: false,
         password: false,
+        // confirmPassword:false,
     },
     formIsValid: false
 }
@@ -46,6 +50,14 @@ const SignUpForm = props => {
     }, [error])
 
     const authHandler = useCallback(async () => {
+        // const app = getFirebaseApp();
+        // const auth = getAuth(app);
+        // console.log(auth.currentUser);
+        // sendEmailVerification(auth.currentUser)
+        //     .then(() => {
+
+        //         Alert.alert("Notify", "Email verification sent!", [{ text: "OK" }])
+        //     });
         try {
             setIsLoading(true);
 
@@ -54,81 +66,108 @@ const SignUpForm = props => {
                 formState.inputValues.lastName,
                 formState.inputValues.email,
                 formState.inputValues.password,
+                formState.inputValues.confirmPassword,
+                
             );
-            setError(null);
-            await dispatch(action);
+            console.log( formState.inputValues.password)
+            console.log( formState.inputValues.confirmPassword)
+            
+
+            if ( formState.inputValues.password != formState.inputValues.confirmPassword)
+                { 
+                 setError(Alert.alert("Notify","Password don't match confirm password",[{ text: "OK" }]));
+                 setIsLoading(false);
+                }
+                 else{
+                //  {setIsLoading(true);
+
+                //  signUp(
+                //      formState.inputValues.firstName,
+                //      formState.inputValues.lastName,
+                //      formState.inputValues.email,
+                //      formState.inputValues.password,
+                //      formState.inputValues.confirmPassword,
+                     
+                //  );
+               
+           
+               setError(null);
+                await dispatch(action);}
         } catch (error) {
             setError(error.message);
             setIsLoading(false);
         }
+        
+
     }, [dispatch, formState]);
 
     return (
-            <View style={styles.InputCover}>
-<Input
-                    id="firstName"
-                    label="First name"
-                    icon="user-o"
-                    iconPack={FontAwesome}
-                    onInputChanged={inputChangedHandler}
-                    autoCapitalize="none"
-                    errorText={formState.inputValidities["firstName"]} />
+        <View style={styles.InputCover}>
+            <Input
+                id="firstName"
+                label="First name"
+                icon="user-o"
+                iconPack={FontAwesome}
+                onInputChanged={inputChangedHandler}
+                autoCapitalize="none"
+                errorText={formState.inputValidities["firstName"]} />
 
-                <Input
-                    id="lastName"
-                    label="Last name"
-                    icon="user-o"
-                    iconPack={FontAwesome}
-                    onInputChanged={inputChangedHandler}
-                    autoCapitalize="none"
-                    errorText={formState.inputValidities["lastName"]} />
+            <Input
+                id="lastName"
+                label="Last name"
+                icon="user-o"
+                iconPack={FontAwesome}
+                onInputChanged={inputChangedHandler}
+                autoCapitalize="none"
+                errorText={formState.inputValidities["lastName"]} />
 
-                <Input
-                    id="email"
-                    label="Email"
-                    icon="mail"
-                    iconPack={Feather}
-                    onInputChanged={inputChangedHandler}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    errorText={formState.inputValidities["email"]} />
+            <Input
+                id="email"
+                label="Email"
+                icon="mail"
+                iconPack={Feather}
+                onInputChanged={inputChangedHandler}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                errorText={formState.inputValidities["email"]} />
 
-                <Input
-                    id="password"
-                    label="Password"
-                    icon="lock"
-                    autoCapitalize="none"
-                    secureTextEntry
-                    iconPack={Feather}
-                    onInputChanged={inputChangedHandler}
-                    errorText={formState.inputValidities["password"]} />
-                
-                {/* <Input
+            <Input
+                id="password"
+                label="Password"
+                icon="lock"
+                autoCapitalize="none"
+                secureTextEntry
+                iconPack={Feather}
+                onInputChanged={inputChangedHandler}
+                errorText={formState.inputValidities["password"]} />
+
+            { <Input
+                    id="confirmPassword"
                     label="Confirm Password"
                     icon="lock"
                     autoCapitalize="none"
                     secureTextEntry
                     iconPack={Feather}
                     onInputChanged={inputChangedHandler}
-                    errorText={formState.inputValidities["password"]} /> */}
-                {
-                    isLoading ? 
+                    errorText={formState.inputValidities["confirmPassword"]} /> }
+            {
+                isLoading ?
                     <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
                     <SubmitButton
                         title="Sign up"
                         onPress={authHandler}
                         style={{ marginTop: 20 }}
-                        disabled={!formState.formIsValid}/>
-                }
-            </View>
+                        disabled={!formState.formIsValid} />
+            }
+        </View>
     )
 };
 
 const styles = StyleSheet.create({
     InputCover: {
         marginTop: '10%',
-        width: 275,    
-      },
+        width: 275,
+    },
 })
 
 export default SignUpForm;
