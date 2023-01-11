@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         marginTop: '5%',
         marginBottom : '5%',
+       
     },
     icon: {
         marginRight: 10,
@@ -67,6 +68,10 @@ const styles = StyleSheet.create({
         fontFamily: 'regular',
         letterSpacing: 0.3,
         paddingTop: 0,
+        
+        
+       
+        
     },
     errorContainer: {
         marginVertical: 5
@@ -75,7 +80,9 @@ const styles = StyleSheet.create({
         color: 'red',
         fontSize: 13,
         fontFamily: 'regular',
-        letterSpacing: 0.3
+        letterSpacing: 0.3,
+        marginTop:-15,
+        marginBottom:5,
     }
 })
 
