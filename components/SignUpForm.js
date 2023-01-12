@@ -18,14 +18,14 @@ const initialState = {
         lastName: "",
         email: "",
         password: "",
-        // confirmPassword:"",
+
     },
     inputValidities: {
         firstName: false,
         lastName: false,
         email: false,
         password: false,
-        // confirmPassword:false,
+
     },
     formIsValid: false
 }
@@ -50,15 +50,10 @@ const SignUpForm = props => {
     }, [error])
 
     const authHandler = useCallback(async () => {
-        // const app = getFirebaseApp();
-        // const auth = getAuth(app);
-        // console.log(auth.currentUser);
-        // sendEmailVerification(auth.currentUser)
-        //     .then(() => {
 
-        //         Alert.alert("Notify", "Email verification sent!", [{ text: "OK" }])
-        //     });
         try {
+
+
             setIsLoading(true);
 
             const action = signUp(
@@ -67,37 +62,36 @@ const SignUpForm = props => {
                 formState.inputValues.email,
                 formState.inputValues.password,
             );
-            console.log( formState.inputValues.password)
-            console.log( formState.inputValues.confirmPassword)
+
+
+
+
+            if (formState.inputValues.password != formState.inputValues.confirmPassword) {
+                setError(Alert.alert("Notify", "Password don't match confirm password", [{ text: "OK" }]));
+                setIsLoading(false);
+            }
+            else {
+
+
+                setError(null);
+                await dispatch(action);
             
+            const app = getFirebaseApp();
+            const auth = getAuth(app);
+            console.log(auth.currentUser);
+            sendEmailVerification(auth.currentUser)
+                .then(() => {
 
-            if ( formState.inputValues.password != formState.inputValues.confirmPassword)
-                { 
-                 setError(Alert.alert("Notify","Password don't match confirm password",[{ text: "OK" }]));
-                 setIsLoading(false);
-                }
-                 else{
-                //  {setIsLoading(true);
-
-                //  signUp(
-                //      formState.inputValues.firstName,
-                //      formState.inputValues.lastName,
-                //      formState.inputValues.email,
-                //      formState.inputValues.password,
-                //      formState.inputValues.confirmPassword,
-                     
-                //  );
-               
-           
-               setError(null);
-                await dispatch(action);}
+                    Alert.alert("Notify", "Email verification sent! Please Verify your email to sign in! ", [{ text: "OK" }])
+                });}
         } catch (error) {
             setError(error.message);
             setIsLoading(false);
         }
-        
+
 
     }, [dispatch, formState]);
+
 
     return (
         <View style={styles.InputCover}>
@@ -139,15 +133,15 @@ const SignUpForm = props => {
                 onInputChanged={inputChangedHandler}
                 errorText={formState.inputValidities["password"]} />
 
-            { <Input
-                    id="confirmPassword"
-                    label="Confirm Password"
-                    icon="lock"
-                    autoCapitalize="none"
-                    secureTextEntry
-                    iconPack={Feather}
-                    onInputChanged={inputChangedHandler}
-                    errorText={formState.inputValidities["confirmPassword"]} /> }
+            {<Input
+                id="confirmPassword"
+                label="Confirm Password"
+                icon="lock"
+                autoCapitalize="none"
+                secureTextEntry
+                iconPack={Feather}
+                onInputChanged={inputChangedHandler}
+                errorText={formState.inputValidities["confirmPassword"]} />}
             {
                 isLoading ?
                     <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :

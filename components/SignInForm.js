@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
 import { Feather } from '@expo/vector-icons';
-import { StyleSheet, View, Text, TouchableOpacity,Image } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducer';
 import { signIn } from '../utils/actions/authActions';
@@ -11,9 +11,10 @@ import { useDispatch } from 'react-redux';
 import colors from '../constants/colors';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 import CustomHeaderButton from './CustomHeaderButton';
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirebaseApp } from '../utils/firebaseHelper';
-
+import { result } from 'validate.js';
+import { useSelector } from "react-redux";
 
 const isTestMode = false;
 
@@ -31,7 +32,7 @@ const initialState = {
 
 const SignInForm = props => {
     const dispatch = useDispatch();
-
+    const userData = useSelector(state => state.auth.userData);
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
@@ -52,11 +53,24 @@ const SignInForm = props => {
     const authHandler = useCallback(async () => {
         try {
             setIsLoading(true);
-
             const action = signIn(
                 formState.inputValues.email,
                 formState.inputValues.password,
             );
+            
+            
+            console.log(formState.inputValues.email)
+            console.log(formState.inputValues.password)
+            
+            // const app = getFirebaseApp();
+            // const auth = getAuth(app);
+            // console.log(auth.currentUser);
+
+            
+           
+          
+           
+
             setError(null);
             await dispatch(action);
         } catch (error) {
@@ -76,8 +90,9 @@ const SignInForm = props => {
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    Alert.alert("Notify","Please enter a valid email", [{ text: "OK" }])
+                    Alert.alert("Notify", "Please enter a valid email", [{ text: "OK" }])
                 });
+            
         }
         else { Alert.alert("Notify", "Please enter a valid email", [{ text: "OK" }]) }
 
@@ -99,7 +114,7 @@ const SignInForm = props => {
             // value={email}
 
             />
-            
+
             <Input
                 id="password"
                 label="Password"
@@ -110,24 +125,24 @@ const SignInForm = props => {
                 onInputChanged={inputChangedHandler}
                 initialValue={formState.inputValues.password}
                 errorText={formState.inputValidities["password"]}
-                 >
+            >
 
             </Input>
             <TouchableOpacity
-            style={styles.wrapperIcon}
-                onPress={()=>setSeePassword(!seePassword)}>
+                style={styles.wrapperIcon}
+                onPress={() => setSeePassword(!seePassword)}>
                 <Image source={
-                    seePassword 
-                    ? require('../assets/images/show_pass.png') 
-                    : require('../assets/images/hide_pass.png')
-                    } 
+                    seePassword
+                        ? require('../assets/images/show_pass.png')
+                        : require('../assets/images/hide_pass.png')
+                }
                     style={styles.Icon} >
-                        
-                    </Image>
-                    <Text style={{fontSize:13, color:'#666666'}}>   Show password !</Text>
+
+                </Image>
+                <Text style={{ fontSize: 13, color: '#666666' }}>   Show password !</Text>
             </TouchableOpacity>
-            
-            
+
+
             {
                 isLoading ?
                     <ActivityIndicator size={'small'} color={colors.primary} style={{ marginTop: 10 }} /> :
@@ -138,7 +153,7 @@ const SignInForm = props => {
                         disabled={!formState.formIsValid} />
             }
             <TouchableOpacity
-                style={{ alignItems: 'center', marginTop:15 ,marginBottom:-5 }}
+                style={{ alignItems: 'center', marginTop: 15, marginBottom: -5 }}
                 onPress={resetPassword}
             >
                 <Text style={styles.link}>Forget password?</Text>
@@ -153,35 +168,35 @@ const styles = StyleSheet.create({
     InputCover: {
         marginTop: '10%',
         width: 275,
-        
+
     },
 
     wrapperIcon: {
-       
+
         // bottom: 55,
         // marginLeft:"50%",
         // paddingLeft:"50%",
         // position: 'relative',
-        flexDirection: 'row' ,
-        left:5,
-        marginTop:"-3%",
+        flexDirection: 'row',
+        left: 5,
+        marginTop: "-3%",
 
-        
-        
+
+
 
     },
     Icon: {
-        left:5,
+        left: 5,
         width: 20,
         height: 20,
-       
-       
-        
-        
-       
-       
+
+
+
+
+
+
     },
-    
+
 
 })
 
