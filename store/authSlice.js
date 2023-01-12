@@ -5,15 +5,18 @@ const authSlice = createSlice({
     initialState: {
         token: null,
         userData: null,
-        didTryAutoLogin: false
+        didTryAutoLogin: false,
+        emailVerified: false,
+
     },
     reducers: {
-        authenticate: (state, action) => {
+        authenticate: (state, action) => {            
             const { payload } = action;
             state.token = payload.token;
             state.userData = payload.userData;
             state.didTryAutoLogin = true;
-            console.log(state.userData)
+            state.emailVerified= payload.emailVerified;
+            // console.log(state.userData)
         },
         setDidTryAutoLogin: (state, action) => {
             state.didTryAutoLogin = true;
