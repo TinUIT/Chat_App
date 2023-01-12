@@ -57,7 +57,8 @@ const NewChatScreen = props => {
                     }
                 </HeaderButtons>
             },
-            headerTitle: isGroupChat ? "Add participants" : "New chat"
+            headerTitle: isGroupChat ? "Add participants" : "New chat",
+            headerTitleAlign: 'center'
         })
     }, [chatName, selectedUsers]);
 
@@ -219,7 +220,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: colors.extraLightGrey,
-        height: 30,
+        height: 40,
         marginVertical: 8,
         paddingHorizontal: 8,
         paddingVertical: 5,
@@ -228,7 +229,8 @@ const styles = StyleSheet.create({
     searchBox: {
         marginLeft: 8,
         fontSize: 15,
-        width: '100%'
+        width: '100%',
+        height: 30
     },
     noResultsIcon: {
         marginBottom: 20

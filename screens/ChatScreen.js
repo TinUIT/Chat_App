@@ -65,6 +65,7 @@ const ChatScreen = (props) => {
   const chatData = (chatId && storedChats[chatId]) || props.route?.params?.newChatData;
 
   const getChatTitleFromName = () => {
+ 
     const otherUserId = chatUsers.find(uid => uid !== userData.userId);
     const otherUserData = storedUsers[otherUserId];
 

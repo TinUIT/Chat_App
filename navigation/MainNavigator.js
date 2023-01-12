@@ -32,6 +32,7 @@ const TabNavigator = () => {
         name="ChatList"
         component={ChatListScreen}
         options={{
+          headerTitle: "Chats",
           tabBarLabel: "Chats",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="chatbubble-outline" size={size} color={color} />
@@ -42,6 +43,7 @@ const TabNavigator = () => {
         name="Settings"
         component={SettingsScreen}
         options={{
+          headerTitle: "Settings",
           tabBarLabel: "Settings",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="settings-outline" size={size} color={color} />
