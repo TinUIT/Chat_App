@@ -61,7 +61,7 @@ const ChatSettingsScreen = props => {
     }
 
     return <PageContainer>
-        <PageTitle text="Chat Settings" />
+        <PageTitle /*text="Chat Settings"*/ />
 
         <ScrollView contentContainerStyle={styles.scrollView}>
             <ProfileImage
@@ -94,7 +94,7 @@ const ChatSettingsScreen = props => {
 
                 {
                     chatData.users.map(uid => {
-                        const currentUser = storedUsers(uid);
+                        const currentUser = storedUsers[uid];
                         return <DataItem
                             key={uid}
                             image={currentUser.profilePicture}

@@ -60,8 +60,6 @@ const SignUpForm = props => {
                 formState.inputValues.email,
                 formState.inputValues.password,
             );
-            console.log(formState.inputValues.password)
-            console.log(formState.inputValues.confirmPassword)
 
 
             if (formState.inputValues.password != formState.inputValues.confirmPassword) {
@@ -69,8 +67,20 @@ const SignUpForm = props => {
                 setIsLoading(false);
             }
             else {
+
+
                 setError(null);
                 await dispatch(action);
+
+                const app = getFirebaseApp();
+                const auth = getAuth(app);
+                console.log(auth.currentUser);
+                sendEmailVerification(auth.currentUser)
+                    .then(() => {
+
+                        Alert.alert("Notify", "Email verification sent! Please Verify your email to sign in! ", [{ text: "OK" }]);
+                        setIsLoading(false);
+                    });
             }
         } catch (error) {
             setError(error.message);
