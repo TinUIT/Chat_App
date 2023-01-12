@@ -1,5 +1,6 @@
 import { child, get, getDatabase, push, ref, remove, set, update } from "firebase/database";
 import { getFirebaseApp } from "../firebaseHelper";
+import { getUserChats } from "./userActions";
 
 export const createChat = async (loggedInUserId, chatData) => {
 
@@ -97,5 +98,22 @@ export const starMessage = async (messageId, chatId, userId) => {
         }
     } catch (error) {
         console.log(error);        
+    }
+}
+
+export const removeUserFromChat = async (userLoggedInData, userToRemoveData, chatData) => {
+    const userToRemoveId = userLoggedInData.userId;
+    const newUsers = chatData.User.filter(uid => userToRemoveId);
+    await updateChatData(chatData.key, userLoggedInData.userId, {users: newUsers});
+
+    const userChats = await getUserChats(userToRemoveId);
+
+    for(const key in userChats) {
+        const currentUserChatId = userChats[key];
+
+        if(currentChatId === chatData.key) {
+            await deleteUserChat(userToRemoveId, key);
+            break;
+        }
     }
 }

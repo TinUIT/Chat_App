@@ -72,8 +72,8 @@ const ChatScreen = (props) => {
     return otherUserData && `${otherUserData.firstName} ${otherUserData.lastName}`;
   }
 
-  const title = chatData.chatName ?? getChatTitleFromName();
-
+  const title = chatData.chatName === "" ? getChatTitleFromName(): chatData.chatName;
+  console.log(title);
   useEffect(() => {
     props.navigation.setOptions({
       headerTitle: title,
