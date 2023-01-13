@@ -35,8 +35,9 @@ const TabNavigator = () => {
         options={{
           headerTitle: "Chats",
           tabBarLabel: "Chats",
+          
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="chatbubble-outline" size={size} color={color} />
+            <Ionicons name="chatbubbles-outline" size={size} color={color} />
           ),
         }}
       />
