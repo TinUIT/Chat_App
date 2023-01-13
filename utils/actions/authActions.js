@@ -4,7 +4,7 @@ import { child, getDatabase, ref, set, update } from 'firebase/database';
 import { authenticate, logout } from '../../store/authSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUserData } from './userActions';
-import {Alert } from 'react-native';
+import { Alert } from 'react-native';
 import RNRestart from 'react-native-restart';
 
 let timer;
@@ -14,19 +14,16 @@ export const signUp = (firstName, lastName, email, password) => {
         const app = getFirebaseApp();
         const auth = getAuth(app);
 
-        try {
-            const result = await createUserWithEmailAndPassword(auth, email, password);
-            
-            const { uid, stsTokenManager } = result.user;
-            const userData = await createUser(firstName, lastName, email, uid);
-            if (result.user.emailVerified == true) {            
-                const { accessToken, expirationTime } = stsTokenManager;
+        const result = await createUserWithEmailAndPassword(auth, email, password);
+        const { uid, stsTokenManager } = result.user;
+        const userData = await createUser(firstName, lastName, email, uid);
 
+        if (result.user.emailVerified == true) {
+            try {
+                const { accessToken, expirationTime } = stsTokenManager;
                 const expiryDate = new Date(expirationTime);
                 const timeNow = new Date();
                 const millisecondsUntilExpiry = expiryDate - timeNow;
-
-                
 
                 dispatch(authenticate({ token: accessToken, userData }));
                 saveDataToStorage(accessToken, uid, expiryDate);
@@ -35,19 +32,21 @@ export const signUp = (firstName, lastName, email, password) => {
                     dispatch(userLogout());
                 }, millisecondsUntilExpiry);
             }
-        }
-        catch (error) {
-            console.log(error);
-            const errorCode = error.code;
 
-            let message = Alert.alert("Notify", "Account successfully created!Please Verify your email to sign in!", [{ text: "OK" }]);
+            catch (error) {
+                console.log(error);
+                const errorCode = error.code;
 
-            if (errorCode === "auth/email-already-in-use") {
-                message = "This email is already in use";
+                let message = "Something went wrong.";
+
+
+                if (errorCode === "auth/email-already-in-use") {
+                    message = "This email is already in use";
+                }
+
+                throw new Error(message);
             }
-
-            throw new Error(message);
-        }
+        } 
     }
 }
 
@@ -90,6 +89,9 @@ export const signIn = (email, password) => {
             if (errorCode === "auth/wrong-password" || errorCode === "auth/user-not-found") {
                 message = "The username or password was incorrect";
             }
+
+
+
             throw new Error(message);
         }
     }
