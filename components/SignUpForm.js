@@ -52,6 +52,8 @@ const SignUpForm = props => {
     const authHandler = useCallback(async () => {
 
         try {
+
+
             setIsLoading(true);
 
             const action = signUp(
@@ -60,28 +62,23 @@ const SignUpForm = props => {
                 formState.inputValues.email,
                 formState.inputValues.password,
             );
-
-
             if (formState.inputValues.password != formState.inputValues.confirmPassword) {
                 setError(Alert.alert("Notify", "Password don't match confirm password", [{ text: "OK" }]));
                 setIsLoading(false);
             }
             else {
-
-
                 setError(null);
                 await dispatch(action);
+            
+            const app = getFirebaseApp();
+            const auth = getAuth(app);
+            console.log(auth.currentUser);
+            sendEmailVerification(auth.currentUser)
+                .then(() => {
 
-                const app = getFirebaseApp();
-                const auth = getAuth(app);
-                console.log(auth.currentUser);
-                sendEmailVerification(auth.currentUser)
-                    .then(() => {
-
-                        Alert.alert("Notify", "Email verification sent! Please Verify your email to sign in! ", [{ text: "OK" }]);
-                        setIsLoading(false);
-                    });
-            }
+                    Alert.alert("Notify", "Email verification sent! Please Verify your email to sign in! ", [{ text: "OK" }])
+                    setIsLoading(false);
+                });}
         } catch (error) {
             setError(error.message);
             setIsLoading(false);
