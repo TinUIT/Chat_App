@@ -145,7 +145,7 @@ const MainNavigator = (props) => {
 
           if (data) {
 
-            if(!data.users.include(userData.userId)) {
+            if(!data.users.includes(userData.userId)) {
               return;
             }
 

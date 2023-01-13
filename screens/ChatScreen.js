@@ -72,7 +72,6 @@ const ChatScreen = (props) => {
     return otherUserData && `${otherUserData.firstName} ${otherUserData.lastName}`;
   }
 
-  console.log(title);
   useEffect(() => {
     if(!chatData) return;
     props.navigation.setOptions({

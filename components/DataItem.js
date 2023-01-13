@@ -17,7 +17,7 @@ const DataItem = props => {
             <View style={styles.container}>
 
                 {
-                    !icon &&
+                    !icon && !hideImage &&
                     <ProfileImage 
                         uri={image}
                         size={imageSize}

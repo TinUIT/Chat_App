@@ -1,6 +1,7 @@
 import { child, get, getDatabase, push, ref, remove, set, update } from "firebase/database";
+import { async } from "validate.js";
 import { getFirebaseApp } from "../firebaseHelper";
-import { getUserChats } from "./userActions";
+import { addUserChat, deleteUserChat, getUserChats } from "./userActions";
 
 export const createChat = async (loggedInUserId, chatData) => {
 
@@ -110,23 +111,46 @@ export const starMessage = async (messageId, chatId, userId) => {
 }
 
 export const removeUserFromChat = async (userLoggedInData, userToRemoveData, chatData) => {
-    const userToRemoveId = userLoggedInData.userId;
-    const newUsers = chatData.User.filter(uid => userToRemoveId);
-    await updateChatData(chatData.key, userLoggedInData.userId, {users: newUsers});
+    const userToRemoveId = userToRemoveData.userId;
+    const newUsers = chatData.users.filter(uid => uid !== userToRemoveId);
+    await updateChatData(chatData.key, userLoggedInData.userId, { users: newUsers });
 
     const userChats = await getUserChats(userToRemoveId);
 
-    for(const key in userChats) {
-        const currentUserChatId = userChats[key];
+    for (const key in userChats) {
+        const currentChatId = userChats[key];
 
-        if(currentChatId === chatData.key) {
+        if (currentChatId === chatData.key) {
             await deleteUserChat(userToRemoveId, key);
             break;
         }
     }
 
     const messageText = userLoggedInData.userId === userToRemoveData.userId ?
-    `${userLoggedInData.firstName} left the chat` : 
-    `${userLoggedInData.firstName} remove ${userToRemoveData.firstName} from the chat`;
+        `${userLoggedInData.firstName} left the chat` :
+        `${userLoggedInData.firstName} removed ${userToRemoveData.firstName} from the chat`;
+
     await sendInfoMessage(chatData.key, userLoggedInData.userId, messageText);
+}
+
+export const addUsersToChat = async (userLoggedInData, usersToAddData, chatData) => {
+    const existingUsers = Object.values(chatData.users);
+    const newUsers = [];
+
+    usersToAddData.forEach(userToAdd => {
+        const userToAddId = userToAdd.userId;
+
+        if(existingUsers.includes(userToAddId)) return;
+
+        newUsers.push(userToAddId);
+
+        addUserChat(userToAddId, chatData.key)
+    });
+
+    if(newUsers.length === 0)
+    {
+        return;
+    }
+
+    await updateChatData(chatData.key, userLoggedInData.userId, {users: existingUsers.concat(newUsers)})
 }
