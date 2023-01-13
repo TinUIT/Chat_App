@@ -20,6 +20,7 @@ const ChatSettingsScreen = props => {
     const chatId = props.route.params.chatId;
     const chatData = useSelector(state => state.chats.chatsData[chatId]);
     const userData = useSelector(state => state.auth.userData);
+    const storedUsers = useSelector(state => state.users.storedUsers);
 
     const initialState = {
         inputValues: { chatName: chatData.chatName },
@@ -60,7 +61,7 @@ const ChatSettingsScreen = props => {
     }
 
     return <PageContainer>
-        <PageTitle text="Chat Settings" />
+        <PageTitle /*text="Chat Settings"*/ />
 
         <ScrollView contentContainerStyle={styles.scrollView}>
             <ProfileImage
@@ -88,7 +89,22 @@ const ChatSettingsScreen = props => {
                 <DataItem
                     title="Add users"
                     icon="plus"
+                    type = "button"
                 />
+
+                {
+                    chatData.users.map(uid => {
+                        const currentUser = storedUsers[uid];
+                        return <DataItem
+                            key={uid}
+                            image={currentUser.profilePicture}
+                            title={`${currentUser.firstName} ${currentUser.lastName}`}
+                            subTitle={currentUser.about}
+                            type={uid !== userData.userId && "link"}
+                            onPress={() => uid !== userData.userId && props.navigation.navigate("Contact",{uid, chatId})}
+                        />
+                    })
+                }
             </View>
 
 

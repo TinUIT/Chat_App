@@ -72,8 +72,8 @@ const ChatScreen = (props) => {
     return otherUserData && `${otherUserData.firstName} ${otherUserData.lastName}`;
   }
 
-  const title = chatData.chatName ?? getChatTitleFromName();
-
+  const title = chatData.chatName === "" ? getChatTitleFromName(): chatData.chatName;
+  console.log(title);
   useEffect(() => {
     props.navigation.setOptions({
       headerTitle: title,
@@ -196,7 +196,16 @@ const ChatScreen = (props) => {
 
                   const isOwnMessage = message.sentBy === userData.userId;
 
-                  const messageType = isOwnMessage ? "myMessage" : "theirMessage";
+                  let messageType;
+                  if(message.type && message.type==="info"){
+                    messageType="info";
+                  } 
+                  else if (isOwnMessage) {
+                    messageType = "myMessage"
+                  }
+                  else {
+                    messageType = "theirMessage"
+                  }
 
                   const sender = message.sentBy && storedUsers[message.sentBy];
                   const name = sender && `${sender.firstName} ${sender.lastName}`;

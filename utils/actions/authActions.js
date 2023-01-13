@@ -14,16 +14,12 @@ export const signUp = (firstName, lastName, email, password) => {
         const app = getFirebaseApp();
         const auth = getAuth(app);
 
-
         try {
             const result = await createUserWithEmailAndPassword(auth, email, password);
             
             const { uid, stsTokenManager } = result.user;
             const userData = await createUser(firstName, lastName, email, uid);
-            if (result.user.emailVerified == true) {
-                
-
-                
+            if (result.user.emailVerified == true) {            
                 const { accessToken, expirationTime } = stsTokenManager;
 
                 const expiryDate = new Date(expirationTime);
@@ -98,9 +94,6 @@ export const signIn = (email, password) => {
             if (errorCode === "auth/wrong-password" || errorCode === "auth/user-not-found") {
                 message = "The username or password was incorrect";
             }
-
-
-
             throw new Error(message);
         }
     }
