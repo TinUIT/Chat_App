@@ -67,8 +67,6 @@ const SignUpForm = props => {
                 setIsLoading(false);
             }
             else {
-
-
                 setError(null);
                 await dispatch(action);
 

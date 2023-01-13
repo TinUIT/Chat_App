@@ -81,9 +81,6 @@ export const signIn = (email, password) => {
                 }, millisecondsUntilExpiry);
             }
 
-
-
-
         } catch (error) {
             const errorCode = error.code;
 

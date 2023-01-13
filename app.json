@@ -4,7 +4,7 @@
     "slug": "ChatApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/logo.jpg",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash_pic.png",

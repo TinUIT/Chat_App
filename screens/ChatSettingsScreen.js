@@ -18,7 +18,7 @@ const ChatSettingsScreen = props => {
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     const chatId = props.route.params.chatId;
-    const chatData = useSelector(state => state.chats.chatsData[chatId]);
+    const chatData = useSelector(state => state.chats.chatsData[chatId] || {});
     const userData = useSelector(state => state.auth.userData);
     const storedUsers = useSelector(state => state.users.storedUsers);
 
@@ -60,6 +60,23 @@ const ChatSettingsScreen = props => {
         return currentValues.chatName != chatData.chatName;
     }
 
+    const leaveChat = useCallback(async () => {
+        try {
+            setIsLoading(true);
+            //Remove user
+            await removeUserFromChat(userData, userData, chatData);
+
+            props.navigation.popToTop();
+        } catch (error) {
+            console.log(error);
+        }
+        finally {
+            setIsLoading(false);
+        }
+    }, [props.navigation, isLoading])
+
+    if (!chatData.users) return null ;
+
     return <PageContainer>
         <PageTitle /*text="Chat Settings"*/ />
 
@@ -93,7 +110,7 @@ const ChatSettingsScreen = props => {
                 />
 
                 {
-                    chatData.users.map(uid => {
+                    chatData.users.slice(0,4).map(uid => {
                         const currentUser = storedUsers[uid];
                         return <DataItem
                             key={uid}
@@ -105,9 +122,16 @@ const ChatSettingsScreen = props => {
                         />
                     })
                 }
+
+                {
+                    chatData.users.length > 4 &&
+                    <DataItem
+                        type = {"link"}
+                        title = "View all"
+                        hideImage = {true}
+                    />
+                }
             </View>
-
-
 
             { showSuccessMessage && <Text>Saved!</Text> }
 
@@ -123,6 +147,15 @@ const ChatSettingsScreen = props => {
             }
 
         </ScrollView>
+
+        {
+            <SubmitButton
+                title = "Leave chat"
+                color = {colors.red}
+                onPress = {() => leaveChat()}
+                style = {{marginBottom: 20}}
+            />
+        }
     </PageContainer>
 };
 
