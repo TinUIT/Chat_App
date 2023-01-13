@@ -4,7 +4,7 @@ import { child, getDatabase, ref, set, update } from 'firebase/database';
 import { authenticate, logout } from '../../store/authSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUserData } from './userActions';
-import { Alert } from 'react-native';
+import {Alert } from 'react-native';
 import RNRestart from 'react-native-restart';
 
 let timer;
@@ -14,39 +14,27 @@ export const signUp = (firstName, lastName, email, password) => {
         const app = getFirebaseApp();
         const auth = getAuth(app);
 
-        const result = await createUserWithEmailAndPassword(auth, email, password);
-        const { uid, stsTokenManager } = result.user;
-        const userData = await createUser(firstName, lastName, email, uid);
 
-        if (result.user.emailVerified == true) {
-            try {
-                const { accessToken, expirationTime } = stsTokenManager;
-                const expiryDate = new Date(expirationTime);
-                const timeNow = new Date();
-                const millisecondsUntilExpiry = expiryDate - timeNow;
+        try {
+            const result = await createUserWithEmailAndPassword(auth, email, password);
+            
+            const { uid, stsTokenManager } = result.user;
+            const userData = await createUser(firstName, lastName, email, uid);
+            
+        }
+        catch (error) {
+            console.log(error);
+            const errorCode = error.code;
+            
+            let message ;
+           
 
-                dispatch(authenticate({ token: accessToken, userData }));
-                saveDataToStorage(accessToken, uid, expiryDate);
-
-                timer = setTimeout(() => {
-                    dispatch(userLogout());
-                }, millisecondsUntilExpiry);
+            if (errorCode === "auth/email-already-in-use") {
+                message = "This email is already in use";
             }
 
-            catch (error) {
-                console.log(error);
-                const errorCode = error.code;
-
-                let message = "Something went wrong.";
-
-
-                if (errorCode === "auth/email-already-in-use") {
-                    message = "This email is already in use";
-                }
-
-                throw new Error(message);
-            }
-        } 
+            throw new Error(message);
+        }
     }
 }
 
