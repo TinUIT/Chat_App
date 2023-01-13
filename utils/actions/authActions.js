@@ -45,6 +45,7 @@ export const signUp = (firstName, lastName, email, password) => {
             const errorCode = error.code;
 
             let message = Alert.alert("Notify", "Account successfully created!Please Verify your email to sign in!", [{ text: "OK" }]);
+           
 
             if (errorCode === "auth/email-already-in-use") {
                 message = "This email is already in use";
