@@ -12,32 +12,53 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFirebaseApp } from "../utils/firebaseHelper";
 import { child, get, getDatabase, off, onValue, ref } from "firebase/database";
 import { setChatsData } from "../store/chatSlice";
-import { ActivityIndicator, KeyboardAvoidingView, Platform, View } from "react-native";
+import { ActivityIndicator, KeyboardAvoidingView, Platform, View} from "react-native";
 import colors from "../constants/colors";
 import commonStyles from "../constants/commonStyles";
 import { setStoredUsers } from "../store/userSlice";
 import { setChatMessages, setStarredMessages } from "../store/messagesSlice";
 import ContactScreen from "../screens/ContactScreen";
+// import { TabNavigator } from 'react-navigation';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
   return (
-    <Tab.Navigator screenOptions={{
+    <Tab.Navigator 
+    screenOptions={{
       headerTitle: "",
-      headerShadowVisible: false  
-    }}>
+      headerShadowVisible: false ,
+      headerStyle: {
+        backgroundColor: '#F4B0B1',
+        
+      },
+      tabBarStyle: {
+        backgroundColor: '#F4B0B1'
+
+      }
+      
+      
+
+      
+    }}
+    
+    //
+    >
       <Tab.Screen
+        
         name="ChatList"
         component={ChatListScreen}
         options={{
           headerTitle: "Chats",
           tabBarLabel: "Chats",
+          tabBarActiveTintColor: 'black',
+          
           
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="chatbubbles-outline" size={size} color={color} />
+            <Ionicons name="chatbubbles" size={size} color={color} />
           ),
+          
         }}
       />
       <Tab.Screen
@@ -46,8 +67,9 @@ const TabNavigator = () => {
         options={{
           headerTitle: "Settings",
           tabBarLabel: "Settings",
+          tabBarActiveTintColor: 'black', 
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="settings-outline" size={size} color={color} />
+            <Ionicons name="settings" size={size} color={color} />
           ),
         }}
       />
@@ -70,6 +92,9 @@ const StackNavigator = () => {
           options={{
             headerTitle: "",
             headerBackTitle: "Back",
+            headerStyle: {
+              backgroundColor: '#F4B0B1',
+            },
           }}
         />
         <Stack.Screen
@@ -78,7 +103,10 @@ const StackNavigator = () => {
           options={{
             headerTitle: "",
             headerBackTitle: "Back",
-            headerShadowVisible: false
+            headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: '#F4B0B1',
+            },
           }}
         />
         <Stack.Screen
@@ -87,6 +115,9 @@ const StackNavigator = () => {
           options={{
             headerTitle: "Contact info",
             headerBackTitle: "Back",
+            headerStyle: {
+              backgroundColor: '#F4B0B1',
+            },
           }}
         />
       </Stack.Group>
@@ -95,6 +126,10 @@ const StackNavigator = () => {
         <Stack.Screen
           name="NewChat"
           component={NewChatScreen}
+          options={{headerStyle: {
+            backgroundColor: '#F4B0B1',
+          },}}
+          
         />
       </Stack.Group>
     </Stack.Navigator>

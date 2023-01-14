@@ -7,6 +7,8 @@ import DataItem from '../components/DataItem';
 import PageContainer from '../components/PageContainer';
 import PageTitle from '../components/PageTitle';
 import colors from '../constants/colors';
+import { Feather } from '@expo/vector-icons';
+import { Header } from 'react-native/Libraries/NewAppScreen';
 
 const ChatListScreen = props => {
 
@@ -25,15 +27,34 @@ const ChatListScreen = props => {
 
     useEffect(() => {
         props.navigation.setOptions({
+            
             headerRight: () => {
-                return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                return <HeaderButtons
+                    HeaderButtonComponent={CustomHeaderButton}
+                    
+                    >
                     <Item
                         title="New chat"
-                        iconName="create-outline"
-                        onPress={() => props.navigation.navigate("NewChat")}/>
+                        iconName="create"
+                        onPress={() => props.navigation.navigate("NewChat")}
+                         />
+                    
+                        
+                        <Item
+                        title="New chat"
+                        iconName="people"
+                        onPress={() => props.navigation.navigate("NewChat", { isGroupChat: true })
+                        
+                    }
+                         />
+                       
+                    
+
                 </HeaderButtons>
             }
-        })
+            
+        }
+        )
     }, []);
 
     useEffect(() => {
@@ -54,7 +75,7 @@ const ChatListScreen = props => {
         }
         else {
             const chatUsers = selectedUserList || [selectedUser];
-            if (!chatUsers.includes(userData.userId)){
+            if (!chatUsers.includes(userData.userId)) {
                 chatUsers.push(userData.userId);
             }
 
@@ -64,62 +85,57 @@ const ChatListScreen = props => {
                     isGroupChat: selectedUserList !== undefined,
                 }
             }
-            if(chatName)
-            {
+            if (chatName) {
                 navigationProps.newChatData.chatName = chatName;
             }
         }
-        
-        
+
+
 
         props.navigation.navigate("ChatScreen", navigationProps);
 
     }, [props.route?.params])
-    
+
     return <PageContainer>
 
-        <PageTitle/>
+        <PageTitle />
 
-            <View>
-                <TouchableOpacity onPress={() => props.navigation.navigate("NewChat", { isGroupChat: true })}>
-                    <Text style={styles.newGroupText}>New Group</Text>
-                </TouchableOpacity>
-            </View>
 
-            <FlatList
-                data={userChats}
-                renderItem={(itemData) => {
-                    const chatData = itemData.item;
-                    const chatId = chatData.key;
-                    const isGroupChat = chatData.isGroupChat;
 
-                    let title = "";
-                    const subTitle = chatData.latestMessageText || "New chat";
-                    let image = "";
+        <FlatList
+            data={userChats}
+            renderItem={(itemData) => {
+                const chatData = itemData.item;
+                const chatId = chatData.key;
+                const isGroupChat = chatData.isGroupChat;
 
-                    if (isGroupChat) {
-                        title = chatData.chatName;  
-                        image = chatData.chatImage;
-                    }
-                    else {
-                        const otherUserId = chatData.users.find(uid => uid !== userData.userId);
-                        const otherUser = storedUsers[otherUserId];
+                let title = "";
+                const subTitle = chatData.latestMessageText || "New chat";
+                let image = "";
 
-                        if (!otherUser) return;
+                if (isGroupChat) {
+                    title = chatData.chatName;
+                    image = chatData.chatImage;
+                }
+                else {
+                    const otherUserId = chatData.users.find(uid => uid !== userData.userId);
+                    const otherUser = storedUsers[otherUserId];
 
-                        title = `${otherUser.firstName} ${otherUser.lastName}`;
-                        image = otherUser.profilePicture;
-                    }
+                    if (!otherUser) return;
 
-                    return <DataItem
-                                title={title}
-                                subTitle={subTitle}
-                                image={image}
-                                onPress={() => props.navigation.navigate("ChatScreen", { chatId })}
-                            />
-                }}
-            />
-        </PageContainer>
+                    title = `${otherUser.firstName} ${otherUser.lastName}`;
+                    image = otherUser.profilePicture;
+                }
+
+                return <DataItem
+                    title={title}
+                    subTitle={subTitle}
+                    image={image}
+                    onPress={() => props.navigation.navigate("ChatScreen", { chatId })}
+                />
+            }}
+        />
+    </PageContainer>
 };
 
 const styles = StyleSheet.create({

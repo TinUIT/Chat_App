@@ -56,7 +56,7 @@ const ContactScreen = props => {
                 style={{ marginBottom: 20 }}
             />
 
-            <PageTitle text={`${currentUser.firstName} ${currentUser.lastName}`} />
+            <PageTitle text={`${currentUser.firstName} ${currentUser.lastName}`} style={{textColor:'white'}} />
             {
                 currentUser.about &&
                 <Text style={styles.about} numberOfLines={2}>{currentUser.about}</Text>

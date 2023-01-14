@@ -72,18 +72,20 @@ const ChatScreen = (props) => {
     return otherUserData && `${otherUserData.firstName} ${otherUserData.lastName}`;
   }
 
-  const title = chatData.chatName === "" ? getChatTitleFromName(): chatData.chatName;
-  console.log(title);
+  
+
   useEffect(() => {
     props.navigation.setOptions({
-      headerTitle: title,
+      headerTitle: chatData.chatName === "" ? getChatTitleFromName() : chatData.chatName,
       headerRight: () => {
-        return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-          {
+        return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}
+        >
+          { 
             chatId && 
             <Item
               title="Chat settings"
-              iconName="settings-outline"
+              iconName="information-circle"             
+             
               onPress={() => chatData.isGroupChat ?
                 props.navigation.navigate("ChatSettings", { chatId }) :
                 props.navigation.navigate("Contact", { uid: chatUsers.find(uid => uid !== userData.userId) })}
@@ -188,6 +190,7 @@ const ChatScreen = (props) => {
               chatId && 
               <FlatList
                 ref={(ref) => flatList.current = ref}
+                showsVerticalScrollIndicator ={false}               
                 onContentSizeChange={() => flatList.current.scrollToEnd({ animated: false })}
                 onLayout={() => flatList.current.scrollToEnd({ animated: false })}
                 data={chatMessages}
@@ -196,16 +199,7 @@ const ChatScreen = (props) => {
 
                   const isOwnMessage = message.sentBy === userData.userId;
 
-                  let messageType;
-                  if(message.type && message.type==="info"){
-                    messageType="info";
-                  } 
-                  else if (isOwnMessage) {
-                    messageType = "myMessage"
-                  }
-                  else {
-                    messageType = "theirMessage"
-                  }
+                  const messageType = isOwnMessage ? "myMessage" : "theirMessage";
 
                   const sender = message.sentBy && storedUsers[message.sentBy];
                   const name = sender && `${sender.firstName} ${sender.lastName}`;
@@ -245,7 +239,7 @@ const ChatScreen = (props) => {
             style={styles.mediaButton}
             onPress={pickImage}
           >
-            <Feather name="plus" size={24} color={colors.blue} />
+            <Feather name="plus" size={24} color='black' />
           </TouchableOpacity>
 
           <TextInput
@@ -260,7 +254,7 @@ const ChatScreen = (props) => {
               style={styles.mediaButton}
               onPress={takePhoto}
             >
-              <Feather name="camera" size={24} color={colors.blue} />
+              <Feather name="camera" size={24} color='black' />
             </TouchableOpacity>
           )}
 
