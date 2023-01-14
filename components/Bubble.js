@@ -155,19 +155,25 @@ const Bubble = props => {
 const styles = StyleSheet.create({
     wrapperStyle: {
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        
     },
     container: {
         backgroundColor: 'white',
-        borderRadius: 6,
+        borderRadius: 10,
         padding: 5,
         marginBottom: 10,
         borderColor: '#E2DACC',
-        borderWidth: 1
+        borderWidth: 1,
+        marginTop:5,
+        
+        
+        
     },
     text: {
         fontFamily: 'regular',
-        letterSpacing: 0.3
+        letterSpacing: 0.3,
+        fontSize: 16
     },
     menuItemContainer: {
         flexDirection: 'row',
@@ -177,7 +183,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontFamily: 'regular',
         letterSpacing: 0.3,
-        fontSize: 16
+        fontSize: 20
     },
     timeContainer: {
         flexDirection: 'row',
@@ -191,7 +197,10 @@ const styles = StyleSheet.create({
     },
     name: {
         fontFamily: 'medium',
-        letterSpacing: 0.3
+        letterSpacing: 0.3,
+        fontSize: 12,
+        color:"#A63F52",
+        marginBottom:4,
     },
     image: {
         width: 300,
