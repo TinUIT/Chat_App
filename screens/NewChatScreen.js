@@ -27,12 +27,12 @@ const NewChatScreen = props => {
     const storedUsers = useSelector(state => state.users.storedUsers);
 
     const selectedUsersFlatList = useRef();
-
-    const chatId = props.route.params || props.route.params.chatId;
-    const existingUsers = props.route.params || props.route.params.existingUsers;
+    
+    const chatId = props.route.params && props.route.params.chatId;
+    const existingUsers = props.route.params && props.route.params.existingUsers;
     const isGroupChat = props.route.params && props.route.params.isGroupChat;
     const isGroupChatDisabled = selectedUsers.length === 0 || (isNewChat && chatName === "");
-
+    
     const isNewChat = !chatId;
 
     useEffect(() => {
@@ -41,7 +41,7 @@ const NewChatScreen = props => {
                 return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item
                         title="Close"
-                        onPress={() => props.navigation.goBack()} />
+                        onPress={() => props.navigation.goBack()}/>
                 </HeaderButtons>
             },
             headerRight: () => {
@@ -53,17 +53,17 @@ const NewChatScreen = props => {
                             disabled={isGroupChatDisabled}
                             color={isGroupChatDisabled ? colors.lightGrey : undefined}
                             onPress={() => {
-                                const screenName = isNewChat ? "ChatList" : "ChatSettings"
+                                const screenName = isNewChat ? "ChatList" : "ChatSettings";
                                 props.navigation.navigate(screenName, {
                                     selectedUsers,
-                                    chatName
+                                    chatName,
+                                    chatId
                                 })
-                            }} />
+                            }}/>
                     }
                 </HeaderButtons>
             },
-            headerTitle: isGroupChat ? "Add participants" : "New chat",
-            headerTitleAlign: 'center'
+            headerTitle: isGroupChat ? "Add participants" : "New chat"
         })
     }, [chatName, selectedUsers]);
 
@@ -111,25 +111,27 @@ const NewChatScreen = props => {
             })
         }
     }
-
+    
     return <PageContainer>
 
-        {
-            isGroupChat && isNewChat &&
-
-            <View style={styles.chatNameContainer}>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.textbox}
-                        placeholder="Enter a name for your chat"
-                        autoCorrect={false}
-                        onChangeText={text => setChatName(text)}
-                    />
+            {
+                isNewChat && isGroupChat &&
+                <View style={styles.chatNameContainer}>
+                        <View style={styles.inputContainer}>
+                            <TextInput 
+                                style={styles.textbox}
+                                placeholder="Enter a name for your chat"
+                                autoCorrect={false}
+                                autoComplete={false}
+                                onChangeText={text => setChatName(text)}
+                            />
+                        </View>
                 </View>
-            </View>
-        }
-        {
-            isGroupChat &&
+            }
+                
+                    
+            {
+                isGroupChat &&
                 <View style={styles.selectedUsersContainer}>
                     <FlatList
                         style={styles.selectedUsersList}
@@ -143,16 +145,16 @@ const NewChatScreen = props => {
                             const userId = itemData.item;
                             const userData = storedUsers[userId];
                             return <ProfileImage
-                                style={styles.selectedUserStyle}
-                                size={40}
-                                uri={userData.profilePicture}
-                                onPress={() => userPressed(userId)}
-                                showRemoveButton={true}
-                            />
+                                        style={styles.selectedUserStyle}
+                                        size={40}
+                                        uri={userData.profilePicture}
+                                        onPress={() => userPressed(userId)}
+                                        showRemoveButton={true}
+                                    />
                         }}
                     />
                 </View>
-        }
+            }
 
 
         <View style={styles.searchContainer}>
@@ -161,12 +163,12 @@ const NewChatScreen = props => {
             <TextInput
                 placeholder='Search'
                 style={styles.searchBox}
-                onChangeText={(text) => { setSearchTerm(text) }}
+                onChangeText={(text) => setSearchTerm(text)}
             />
         </View>
 
         {
-            isLoading &&
+            isLoading && 
             <View style={commonStyles.center}>
                 <ActivityIndicator size={'large'} color={colors.primary} />
             </View>
@@ -185,13 +187,13 @@ const NewChatScreen = props => {
                     }
 
                     return <DataItem
-                        title={`${userData.firstName} ${userData.lastName}`}
-                        subTitle={userData.about}
-                        image={userData.profilePicture}
-                        onPress={() => userPressed(userId)}
-                        type={isGroupChat ? "checkbox" : ""}
-                        isChecked={selectedUsers.includes(userId)}
-                    />
+                                title={`${userData.firstName} ${userData.lastName}`}
+                                subTitle={userData.about}
+                                image={userData.profilePicture}
+                                onPress={() => userPressed(userId)}
+                                type={isGroupChat ? "checkbox" : ""}
+                                isChecked={selectedUsers.includes(userId)}
+                            />
                 }}
             />
         }
@@ -203,7 +205,7 @@ const NewChatScreen = props => {
                         name="question"
                         size={55}
                         color={colors.lightGrey}
-                        style={styles.noResultsIcon} />
+                        style={styles.noResultsIcon}/>
                     <Text style={styles.noResultsText}>No users found!</Text>
                 </View>
             )
@@ -216,7 +218,7 @@ const NewChatScreen = props => {
                         name="users"
                         size={55}
                         color={colors.lightGrey}
-                        style={styles.noResultsIcon} />
+                        style={styles.noResultsIcon}/>
                     <Text style={styles.noResultsText}>Enter a name to search for a user!</Text>
                 </View>
             )
@@ -230,7 +232,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: colors.extraLightGrey,
-        height: 40,
+        height: 30,
         marginVertical: 8,
         paddingHorizontal: 8,
         paddingVertical: 5,
@@ -239,8 +241,7 @@ const styles = StyleSheet.create({
     searchBox: {
         marginLeft: 8,
         fontSize: 15,
-        width: '100%',
-        height: 30
+        width: '100%'
     },
     noResultsIcon: {
         marginBottom: 20
@@ -259,7 +260,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         backgroundColor: colors.nearlyWhite,
         flexDirection: 'row',
-        borderRadius: 10
+        borderRadius: 2
     },
     textbox: {
         color: colors.textColor,
