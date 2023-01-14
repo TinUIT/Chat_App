@@ -7,17 +7,19 @@ import PageTitle from '../components/PageTitle';
 import ProfileImage from '../components/ProfileImage';
 import SubmitButton from '../components/SubmitButton';
 import colors from '../constants/colors';
-import { getUserChats, removeUserFromChat } from '../utils/actions/userActions';
+import { getUserChats} from '../utils/actions/userActions';
+import {removeUserFromChat} from '../utils/actions/chatActions'
 
 const ContactScreen = props => {
     const[isLoading, setIsLoading] = useState(false);
     const storedUsers = useSelector(state => state.users.storedUsers);
+    const userData = useSelector(state => state.auth.userData);
     const currentUser = storedUsers[props.route.params.uid];
-    const userData = useSelector(state => state.auth.userData)
+
     const storedChats = useSelector(state => state.chats.chatsData);
     const [commonChats, setCommonChats] = useState([]);
 
-    const chatId = props.route.params.uid;
+    const chatId = props.route.params.chatId;
     const chatData = chatId && storedChats[chatId];
 
     useEffect(() => {
@@ -85,13 +87,15 @@ const ContactScreen = props => {
 
         {
             chatData && chatData.isGroupChat  &&
-            isLoading ?
-            <ActivityIndicator size= 'small' color={colors.primary} /> :
-            <SubmitButton
-                title="Remove from chat"
-                color={colors.red}
-                onPress={removeFromChat}
-            />
+            (
+                isLoading ?
+                <ActivityIndicator size= 'small' color={colors.primary} /> :
+                <   SubmitButton
+                    title="Remove from chat"
+                    color={colors.red}
+                    onPress={removeFromChat}
+                />
+            )
         }
 
     </PageContainer>

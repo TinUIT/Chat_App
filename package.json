@@ -33,8 +33,11 @@
     "react-navigation-header-buttons": "^10.0.0",
     "react-redux": "^8.0.5",
     "validate.js": "^0.13.1",
-    "expo-clipboard": "~4.0.1",
-    "react-native-screens": "~3.18.0"
+    "react-native-screens": "~3.18.0",
+    "expo-notifications": "~0.17.0",
+    "expo-device": "~5.0.0",
+    "expo-dev-client": "~2.0.1",
+    "expo-updates": "~0.15.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

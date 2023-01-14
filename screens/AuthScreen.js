@@ -8,7 +8,6 @@ import SignInForm from '../components/SignInForm';
 import SignUpForm from '../components/SignUpForm';
 import colors from '../constants/colors';
 import { ImageBackground } from "react-native";
-import logo from '../assets/images/logo.jpg';
 var inputstyle ;
 const AuthScreen = props => {
 
@@ -24,7 +23,7 @@ const AuthScreen = props => {
                 behavior={Platform.OS === "ios" ? "height" : undefined}
                 keyboardVerticalOffset={100}>
                 <Image
-                    source={require("../assets/images/logo.jpg")}
+                    source={require("../assets/images/logo.png")}
                     style={{ width: 100, height: 100, borderRadius: 30, marginTop: '0%' }}
                 />
                 {

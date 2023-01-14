@@ -27,9 +27,13 @@ const NewChatScreen = props => {
     const storedUsers = useSelector(state => state.users.storedUsers);
 
     const selectedUsersFlatList = useRef();
-
+    
+    const chatId = props.route.params && props.route.params.chatId;
+    const existingUsers = props.route.params && props.route.params.existingUsers;
     const isGroupChat = props.route.params && props.route.params.isGroupChat;
-    const isGroupChatDisabled = selectedUsers.length === 0 || chatName === "";
+    const isGroupChatDisabled = selectedUsers.length === 0 || (isNewChat && chatName === "");
+    
+    const isNewChat = !chatId;
 
     useEffect(() => {
         props.navigation.setOptions({
@@ -46,20 +50,21 @@ const NewChatScreen = props => {
                     {
                         isGroupChat &&
                         <Item
-                            title="Create"
+                            title={isNewChat ? "Create" : "Add"}
                             disabled={isGroupChatDisabled}
                             color={isGroupChatDisabled ? colors.lightGrey : undefined}
                             onPress={() => {
-                                props.navigation.navigate("ChatList", {
+                                const screenName = isNewChat ? "ChatList" : "ChatSettings";
+                                props.navigation.navigate(screenName, {
                                     selectedUsers,
-                                    chatName
+                                    chatName,
+                                    chatId
                                 })
                             }}/>
                     }
                 </HeaderButtons>
             },
-            headerTitle: isGroupChat ? "Add participants" : "New chat",
-            headerTitleAlign: 'center'
+            headerTitle: isGroupChat ? "Add participants" : "New chat"
         })
     }, [chatName, selectedUsers]);
 
@@ -111,42 +116,45 @@ const NewChatScreen = props => {
     return <PageContainer>
 
             {
-                isGroupChat &&
-                <>
-                    <View style={styles.chatNameContainer}>
+                isNewChat && isGroupChat &&
+                <View style={styles.chatNameContainer}>
                         <View style={styles.inputContainer}>
                             <TextInput 
                                 style={styles.textbox}
                                 placeholder="Enter a name for your chat"
                                 autoCorrect={false}
+                                autoComplete={false}
                                 onChangeText={text => setChatName(text)}
                             />
                         </View>
-                    </View>
-
-                    <View style={styles.selectedUsersContainer}>
-                        <FlatList
-                            style={styles.selectedUsersList}
-                            data={selectedUsers}
-                            horizontal={true}
-                            keyExtractor={item => item}
-                            contentContainerStyle={{ alignItems: 'center' }}
-                            ref={ref => selectedUsersFlatList.current = ref}
-                            onContentSizeChange={() => selectedUsersFlatList.current.scrollToEnd()}
-                            renderItem={itemData => {
-                                const userId = itemData.item;
-                                const userData = storedUsers[userId];
-                                return <ProfileImage
-                                            style={styles.selectedUserStyle}
-                                            size={40}
-                                            uri={userData.profilePicture}
-                                            onPress={() => userPressed(userId)}
-                                            showRemoveButton={true}
-                                        />
-                            }}
-                        />
-                    </View>
-                </>
+                </View>
+            }
+                
+                    
+            {
+                isGroupChat &&
+                <View style={styles.selectedUsersContainer}>
+                    <FlatList
+                        style={styles.selectedUsersList}
+                        data={selectedUsers}
+                        horizontal={true}
+                        keyExtractor={item => item}
+                        contentContainerStyle={{ alignItems: 'center' }}
+                        ref={ref => selectedUsersFlatList.current = ref}
+                        onContentSizeChange={() => selectedUsersFlatList.current.scrollToEnd()}
+                        renderItem={itemData => {
+                            const userId = itemData.item;
+                            const userData = storedUsers[userId];
+                            return <ProfileImage
+                                        style={styles.selectedUserStyle}
+                                        size={40}
+                                        uri={userData.profilePicture}
+                                        onPress={() => userPressed(userId)}
+                                        showRemoveButton={true}
+                                    />
+                        }}
+                    />
+                </View>
             }
 
 
@@ -156,7 +164,7 @@ const NewChatScreen = props => {
             <TextInput
                 placeholder='Search'
                 style={styles.searchBox}
-                onChangeText={(text) => {setSearchTerm(text)}}
+                onChangeText={(text) => setSearchTerm(text)}
             />
         </View>
 
@@ -174,6 +182,10 @@ const NewChatScreen = props => {
                 renderItem={(itemData) => {
                     const userId = itemData.item;
                     const userData = users[userId];
+
+                    if (existingUsers && existingUsers.includes(userId)) {
+                        return;
+                    }
 
                     return <DataItem
                                 title={`${userData.firstName} ${userData.lastName}`}
@@ -221,7 +233,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: colors.extraLightGrey,
-        height: 40,
+        height: 30,
         marginVertical: 8,
         paddingHorizontal: 8,
         paddingVertical: 5,
@@ -230,8 +242,7 @@ const styles = StyleSheet.create({
     searchBox: {
         marginLeft: 8,
         fontSize: 15,
-        width: '100%',
-        height: 30
+        width: '100%'
     },
     noResultsIcon: {
         marginBottom: 20
@@ -250,7 +261,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         backgroundColor: colors.nearlyWhite,
         flexDirection: 'row',
-        borderRadius: 10
+        borderRadius: 2
     },
     textbox: {
         color: colors.textColor,
