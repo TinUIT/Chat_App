@@ -4,14 +4,13 @@
     "slug": "ChatApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.jpg",
+    "icon": "./assets/images/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash_pic.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
-    
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -19,16 +18,35 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tinpham0710.ChatApp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.tinpham0710.ChatApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/logo.png",
+          "color": "#ffffff",
+          "sounds": [
+            
+          ]
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "cebc6d6e-f830-4ff4-9e6c-751f4d5cee4d"
+      }
     }
   }
 }
