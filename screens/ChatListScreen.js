@@ -97,8 +97,10 @@ const ChatListScreen = props => {
         <PageTitle />
 
 
-
+        
         <FlatList
+            
+            showsVerticalScrollIndicator ={false}
             data={userChats}
             renderItem={(itemData) => {
                 const chatData = itemData.item;
@@ -128,6 +130,8 @@ const ChatListScreen = props => {
                     subTitle={subTitle}
                     image={image}
                     onPress={() => props.navigation.navigate("ChatScreen", { chatId })}
+                    animationType="fade"
+                    
                 />
             }}
         />

@@ -187,9 +187,9 @@ const ChatScreen = (props) => {
               chatId && 
               <FlatList
                 ref={(ref) => flatList.current = ref}
+                showsVerticalScrollIndicator ={false}
                 onContentSizeChange={() => flatList.current.scrollToEnd({ animated: false })}
                 onLayout={() => flatList.current.scrollToEnd({ animated: false })}
-                showsVerticalScrollIndicator={false}
                 data={chatMessages}
                 renderItem={(itemData) => {
                   const message = itemData.item;
@@ -324,6 +324,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 10,
     height: 50,
+    backgroundColor: '#ededed',
   },
   textbox: {
     flex: 1,
