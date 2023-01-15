@@ -41,6 +41,7 @@ const NewChatScreen = props => {
                 return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item
                         title="Close"
+                        iconName='md-arrow-back-sharp'
                         onPress={() => props.navigation.goBack()}/>
                 </HeaderButtons>
             },
@@ -122,7 +123,6 @@ const NewChatScreen = props => {
                                 style={styles.textbox}
                                 placeholder="Enter a name for your chat"
                                 autoCorrect={false}
-                                autoComplete={false}
                                 onChangeText={text => setChatName(text)}
                             />
                         </View>
@@ -134,6 +134,7 @@ const NewChatScreen = props => {
                 isGroupChat &&
                 <View style={styles.selectedUsersContainer}>
                     <FlatList
+                        showsVerticalScrollIndicator ={false}
                         style={styles.selectedUsersList}
                         data={selectedUsers}
                         horizontal={true}
@@ -269,7 +270,7 @@ const styles = StyleSheet.create({
         letterSpacing: 0.3
     },
     selectedUsersContainer: {
-        height: 50,
+        height: 60,
         justifyContent: 'center'
     },
     selectedUsersList: {

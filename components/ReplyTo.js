@@ -23,12 +23,12 @@ const ReplyTo = props => {
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor: colors.extraLightGrey,
+        backgroundColor: '#ededed',
         padding: 8,
         flexDirection: 'row',
         alignItems: 'center',
-        borderLeftColor: colors.blue,
-        borderLeftWidth: 4
+        bottom: 55,
+        paddingRight:17
     },
     textContainer: {
         flex: 1,

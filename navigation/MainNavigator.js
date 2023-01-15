@@ -67,7 +67,7 @@ const TabNavigator = () => {
             <Ionicons name="chatbubbles" size={size} color={color} />),
 
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="chatbubble-outline" size={size} color={color} />
+            <Ionicons name="chatbubbles" size={size} color={color} />
 
           ),
           
