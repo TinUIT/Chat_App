@@ -41,7 +41,6 @@ const NewChatScreen = props => {
                 return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item
                         title="Close"
-                        iconName='md-arrow-back-sharp'
                         onPress={() => props.navigation.goBack()}/>
                 </HeaderButtons>
             },
@@ -269,7 +268,7 @@ const styles = StyleSheet.create({
         letterSpacing: 0.3
     },
     selectedUsersContainer: {
-        height: 60,
+        height: 50,
         justifyContent: 'center'
     },
     selectedUsersList: {
