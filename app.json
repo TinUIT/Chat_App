@@ -37,8 +37,7 @@
         {
           "icon": "./assets/images/logo.png",
           "color": "#ffffff",
-          "sounds": [
-            
+          "sounds": [        
           ]
         }
       ]
