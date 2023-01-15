@@ -43,11 +43,7 @@ const TabNavigator = () => {
       tabBarStyle: {
         backgroundColor: '#F4B0B1'
 
-      }
-      
-      
-
-      
+      }           
     }}
     
     //
@@ -77,6 +73,7 @@ const TabNavigator = () => {
         name="Settings"
         component={SettingsScreen}
         options={{
+          headerTitle: "Settings",
           tabBarLabel: "Settings",
           tabBarActiveTintColor: 'black', 
           tabBarIcon: ({ color, size }) => (
@@ -166,7 +163,7 @@ const MainNavigator = (props) => {
   const storedUsers = useSelector(state => state.users.storedUsers);
 
   const [expoPushToken, setExpoPushToken] = useState('');
-  // console.log(expoPushToken)
+  console.log(expoPushToken)
   const notificationListener = useRef();
   const responseListener = useRef();
 

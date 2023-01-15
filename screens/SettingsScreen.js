@@ -95,7 +95,7 @@ const SettingsScreen = props => {
     }
     
     return <PageContainer>
-        <PageTitle text="Settings" />
+        <PageTitle/>
 
         <ScrollView contentContainerStyle={styles.formContainer}>
 

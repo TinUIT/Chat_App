@@ -101,7 +101,7 @@ const ChatSettingsScreen = props => {
     if (!chatData.users) return null;
 
     return <PageContainer>
-        <PageTitle text="Chat Settings" />
+        <PageTitle />
 
         <ScrollView contentContainerStyle={styles.scrollView}>
             <ProfileImage

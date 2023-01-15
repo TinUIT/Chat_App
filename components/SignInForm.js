@@ -156,7 +156,7 @@ const SignInForm = props => {
                 style={{ alignItems: 'center', marginTop: 15, marginBottom: -5 }}
                 onPress={resetPassword}
             >
-                <Text style={styles.link}>Forget password?</Text>
+                <Text style={styles.link}>Forgot password ?</Text>
 
             </TouchableOpacity>
 
@@ -168,7 +168,6 @@ const styles = StyleSheet.create({
     InputCover: {
         marginTop: '10%',
         width: 275,
-
     },
 
     wrapperIcon: {
@@ -180,23 +179,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         left: 5,
         marginTop: "-3%",
-
-
-
-
     },
     Icon: {
         left: 5,
         width: 20,
         height: 20,
-
-
-
-
-
-
     },
-
+    link: {
+        color: colors.blue,
+        fontFamily: 'medium',
+        letterSpacing: 0.3
+    }
 
 })
 

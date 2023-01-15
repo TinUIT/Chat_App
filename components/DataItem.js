@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     },
     subTitle: {
         fontFamily: 'regular',
-        color: colors.grey,
+        color: "#fffff",
         letterSpacing: 0.3,
         marginBottom: 10
     },

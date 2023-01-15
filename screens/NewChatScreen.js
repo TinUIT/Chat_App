@@ -51,7 +51,7 @@ const NewChatScreen = props => {
                         <Item
                             title={isNewChat ? "Create" : "Add"}
                             disabled={isGroupChatDisabled}
-                            color={isGroupChatDisabled ? colors.lightGrey : undefined}
+                            color={isGroupChatDisabled ? colors.lightGrey : colors.blue}
                             onPress={() => {
                                 const screenName = isNewChat ? "ChatList" : "ChatSettings";
                                 props.navigation.navigate(screenName, {
@@ -63,7 +63,9 @@ const NewChatScreen = props => {
                     }
                 </HeaderButtons>
             },
-            headerTitle: isGroupChat ? "Add participants" : "New chat"
+            headerTitle: isGroupChat ? "Add participants" : "New chat",
+            headerTitleAlign: 'center'
+
         })
     }, [chatName, selectedUsers]);
 
@@ -231,11 +233,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: colors.extraLightGrey,
-        height: 30,
+        height: 40,
         marginVertical: 8,
         paddingHorizontal: 8,
         paddingVertical: 5,
-        borderRadius: 5
+        borderRadius: 6
     },
     searchBox: {
         marginLeft: 8,
@@ -259,7 +261,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         backgroundColor: colors.nearlyWhite,
         flexDirection: 'row',
-        borderRadius: 2
+        borderRadius: 6
     },
     textbox: {
         color: colors.textColor,
@@ -268,7 +270,7 @@ const styles = StyleSheet.create({
         letterSpacing: 0.3
     },
     selectedUsersContainer: {
-        height: 50,
+        height: 60,
         justifyContent: 'center'
     },
     selectedUsersList: {

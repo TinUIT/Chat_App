@@ -48,8 +48,6 @@ const ChatListScreen = props => {
                     }
                          />
                        
-                    
-
                 </HeaderButtons>
             }
             
@@ -89,8 +87,6 @@ const ChatListScreen = props => {
                 navigationProps.newChatData.chatName = chatName;
             }
         }
-
-
 
         props.navigation.navigate("ChatScreen", navigationProps);
 
