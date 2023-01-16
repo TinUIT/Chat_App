@@ -194,6 +194,14 @@ const MainNavigator = (props) => {
   }, []);
 
   useEffect(() => {
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+      }),
+    });
+
     console.log("Subscribing to firebase listeners");
 
     const app = getFirebaseApp();

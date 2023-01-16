@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "985548449156",
+    "firebase_url": "https://chat-app-9bbb0-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "chat-app-9bbb0",
+    "storage_bucket": "chat-app-9bbb0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985548449156:android:91fe9d01821d9849f5a9d1",
+        "android_client_info": {
+          "package_name": "com.nhom4mobile.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985548449156-pafb149lujggv6vu820b0ep9gpsknlkk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMCimckDpC1MqvceQKdeYevzsF5U2Pji0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985548449156-pafb149lujggv6vu820b0ep9gpsknlkk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

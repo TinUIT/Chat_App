@@ -57,20 +57,6 @@ const SignInForm = props => {
                 formState.inputValues.email,
                 formState.inputValues.password,
             );
-            
-            
-            console.log(formState.inputValues.email)
-            console.log(formState.inputValues.password)
-            
-            // const app = getFirebaseApp();
-            // const auth = getAuth(app);
-            // console.log(auth.currentUser);
-
-            
-           
-          
-           
-
             setError(null);
             await dispatch(action);
         } catch (error) {
@@ -79,7 +65,6 @@ const SignInForm = props => {
         }
     }, [dispatch, formState]);
     const resetPassword = useCallback(async () => {
-        console.log(formState.inputValues.email);
         if (formState.inputValues.email != null) {
             const app = getFirebaseApp();
             const auth = getAuth(app);

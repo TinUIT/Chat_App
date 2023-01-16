@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
+    "cheme": "com.nhom4mobile.chatapp",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash_pic.png",
@@ -19,14 +20,15 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.tinpham0710.ChatApp"
+      "bundleIdentifier": "com.nhom4mobile.chatapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.tinpham0710.ChatApp"
+      "package": "com.nhom4mobile.chatapp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -27,7 +27,7 @@ export const createChat = async (loggedInUserId, chatData) => {
 }
 
 export const sendTextMessage = async (chatId, senderData, messageText, replyTo, chatUsers) => {
-    console.log("ABC");
+    console.log("sendTextMessage");
     await sendMessage(chatId, senderData.userId, messageText, null, replyTo, null);
 
     const otherUsers = chatUsers.filter(uid => uid !== senderData.userId);
@@ -172,7 +172,7 @@ export const addUsersToChat = async (userLoggedInData, usersToAddData, chatData)
 
 const sendPushNotificationForUsers = (chatUsers, title, body, chatId) => {
     chatUsers.forEach(async uid => {
-        console.log("test");
+        console.log("sendPushNotificationForUsers");
         const tokens = await getUserPushTokens(uid);
 
         for(const key in tokens) {
