@@ -100,8 +100,6 @@ const ChatScreen = (props) => {
       let id = chatId;
       if (!id) {
         // No chat Id. Create the chat
-        var route = props.route.params.newChatData;
-        route.chatName = '';
         id = await createChat(userData.userId, props.route.params.newChatData);
         setChatId(id);
       }

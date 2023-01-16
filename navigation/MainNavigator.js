@@ -48,8 +48,7 @@ const TabNavigator = () => {
     
     //
     >
-      <Tab.Screen
-        
+      <Tab.Screen       
         name="ChatList"
         component={ChatListScreen}
         options={{
