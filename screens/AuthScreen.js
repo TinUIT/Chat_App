@@ -24,7 +24,7 @@ const AuthScreen = props => {
                 keyboardVerticalOffset={100}>
                 <Image
                     source={require("../assets/images/logo.png")}
-                    style={{ width: 100, height: 100, borderRadius: 30, marginTop: '0%' }}
+                    style={{ width: 100, height: 100, borderRadius: 15, marginTop: '0%' }}
                 />
                 {
                     isSignUp ?   
