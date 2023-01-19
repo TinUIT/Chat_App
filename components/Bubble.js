@@ -166,9 +166,6 @@ const styles = StyleSheet.create({
         borderColor: '#E2DACC',
         borderWidth: 1,
         marginTop:5,
-        
-        
-        
     },
     text: {
         fontFamily: 'regular',
@@ -183,7 +180,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontFamily: 'regular',
         letterSpacing: 0.3,
-        fontSize: 20
+        fontSize: 15
     },
     timeContainer: {
         flexDirection: 'row',

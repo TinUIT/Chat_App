@@ -3,7 +3,7 @@ import colors from "../constants/colors"
 
 export default PageTitle = props => {
     return <View style={styles.container}>
-        <Text style={styles.text}>{props.text}</Text>
+        {props.text && <Text style={styles.text}>{props.text}</Text>}
     </View>
 }
 
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 28,
-        color: colors.textColor,
+        color: "white",
         fontFamily: 'bold',
         letterSpacing: 0.3
     }

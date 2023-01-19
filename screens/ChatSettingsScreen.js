@@ -103,7 +103,9 @@ const ChatSettingsScreen = props => {
     return <PageContainer>
         <PageTitle />
 
-        <ScrollView contentContainerStyle={styles.scrollView}>
+        <ScrollView 
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.scrollView}>
             <ProfileImage
                 showEditButton={true}
                 size={80}
@@ -172,14 +174,14 @@ const ChatSettingsScreen = props => {
                     disabled={!formState.formIsValid}
                 />
             }
-
+            <View style={{ width: '100%'}}>
             <DataItem
                 type={"link"}
                 title="Starred messages"
                 hideImage={true}
                 onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: Object.values(starredMessages), type: "messages" })}
             />
-
+            </View>
         </ScrollView>
 
         {
@@ -205,11 +207,11 @@ const styles = StyleSheet.create({
     },
     sectionContainer: {
         width: '100%',
-        marginTop: 10
+        marginTop: 10,
     },
     heading: {
         marginVertical: 8,
-        color: colors.textColor,
+        color: "white",
         fontFamily: 'bold',
         letterSpacing: 0.3
     }

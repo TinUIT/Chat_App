@@ -68,7 +68,7 @@ const ChatScreen = (props) => {
  
     const otherUserId = chatUsers.find(uid => uid !== userData.userId);
     const otherUserData = storedUsers[otherUserId];
-
+    console.log(chatData.chatName)
     return otherUserData && `${otherUserData.firstName} ${otherUserData.lastName}`;
   }
 

@@ -27,30 +27,30 @@ const ChatListScreen = props => {
 
     useEffect(() => {
         props.navigation.setOptions({
-            
+
             headerRight: () => {
                 return <HeaderButtons
                     HeaderButtonComponent={CustomHeaderButton}
-                    
-                    >
+
+                >
                     <Item
                         title="New chat"
                         iconName="create"
                         onPress={() => props.navigation.navigate("NewChat")}
-                         />
-                    
-                        
-                        <Item
+                    />
+
+
+                    <Item
                         title="New chat"
                         iconName="people"
                         onPress={() => props.navigation.navigate("NewChat", { isGroupChat: true })
-                        
-                    }
-                         />
-                       
+
+                        }
+                    />
+
                 </HeaderButtons>
             }
-            
+
         }
         )
     }, []);
@@ -86,6 +86,9 @@ const ChatListScreen = props => {
             if (chatName) {
                 navigationProps.newChatData.chatName = chatName;
             }
+            else {
+                navigationProps.newChatData.chatName = "";
+            }
         }
 
         props.navigation.navigate("ChatScreen", navigationProps);
@@ -95,12 +98,9 @@ const ChatListScreen = props => {
     return <PageContainer>
 
         <PageTitle />
-
-
-        
         <FlatList
-            
-            showsVerticalScrollIndicator ={false}
+
+            showsVerticalScrollIndicator={false}
             data={userChats}
             renderItem={(itemData) => {
                 const chatData = itemData.item;
@@ -131,7 +131,7 @@ const ChatListScreen = props => {
                     image={image}
                     onPress={() => props.navigation.navigate("ChatScreen", { chatId })}
                     animationType="fade"
-                    
+
                 />
             }}
         />

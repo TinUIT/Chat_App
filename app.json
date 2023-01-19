@@ -5,15 +5,11 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
-    "cheme": "com.nhom4mobile.chatapp",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash_pic.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
       "**/*"
@@ -23,10 +19,6 @@
       "bundleIdentifier": "com.nhom4mobile.chatapp"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo.png",
-        "backgroundColor": "#FFFFFF"
-      },
       "package": "com.nhom4mobile.chatapp",
       "googleServicesFile": "./google-services.json"
     },
@@ -39,14 +31,13 @@
         {
           "icon": "./assets/images/logo.png",
           "color": "#ffffff",
-          "sounds": [        
-          ]
+          "sounds": []
         }
       ]
     ],
     "extra": {
       "eas": {
-        "projectId": "cebc6d6e-f830-4ff4-9e6c-751f4d5cee4d"
+        "projectId": "352927df-72a1-4a04-aa34-c2fdde6fc0c4"
       }
     }
   }
