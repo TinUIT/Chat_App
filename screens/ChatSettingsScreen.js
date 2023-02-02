@@ -132,7 +132,8 @@ const ChatSettingsScreen = props => {
                     title="Add users"
                     icon="plus"
                     type="button"
-                    onPress={() => props.navigation.navigate("NewChat", { isGroupChat: true, existingUsers: chatData.users, chatId })}
+                    style='borderBottomColor:0'
+                     onPress={() => props.navigation.navigate("NewChat", { isGroupChat: true, existingUsers: chatData.users, chatId })}
                 />
 
                 {

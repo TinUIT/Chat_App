@@ -8,7 +8,7 @@ const CustomHeaderButton = props => {
                 { ...props }
                 IconComponent={Ionicons}
                 iconSize={25}
-                color={props.color ?? colors.black }
+                color={props.color ?? colors.nearlyWhite }
                 style={{marginLeft:-10,marginHorizontal:0}}
             />
 };

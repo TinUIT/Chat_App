@@ -65,6 +65,7 @@ const NewChatScreen = props => {
                 </HeaderButtons>
             },
             headerTitle: isGroupChat ? "Add participants" : "New chat",
+            headerTintColor:'white',
             headerTitleAlign: 'center'
 
         })
@@ -126,6 +127,7 @@ const NewChatScreen = props => {
                                 placeholder="Enter a name for your chat"
                                 autoCorrect={false}
                                 onChangeText={text => setChatName(text)}
+                                placeholderTextColor={'white'}
                             />
                         </View>
                 </View>
@@ -260,16 +262,19 @@ const styles = StyleSheet.create({
     inputContainer: {
         width: '100%',
         paddingHorizontal: 10,
-        paddingVertical: 15,
-        backgroundColor: colors.nearlyWhite,
+        paddingVertical: 8,
+        // backgroundColor: colors.nearlyWhite,
         flexDirection: 'row',
-        borderRadius: 6
+        borderRadius: 6,
+        borderBottomColor: '#777777',
+        borderBottomWidth: 1,
     },
     textbox: {
-        color: colors.textColor,
+        color: 'white',
         width: '100%',
-        fontFamily: 'regular',
-        letterSpacing: 0.3
+        fontFamily: 'regular',        
+        fontSize:18,         
+        
     },
     selectedUsersContainer: {
         height: 60,

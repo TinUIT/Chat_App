@@ -82,7 +82,7 @@ const DataItem = props => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        paddingVertical: 7,
+        // paddingVertical: 7,
         
         
         alignItems: 'center',

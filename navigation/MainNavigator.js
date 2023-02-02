@@ -35,15 +35,18 @@ const TabNavigator = () => {
     <Tab.Navigator 
     screenOptions={{
       headerTitle: "",
+      headerShadowVisible:5,
       headerShadowVisible: false ,
       headerStyle: {
-        backgroundColor: '#F4B0B1',
+        backgroundColor: '#1B313E'
+        
         
       },
       tabBarStyle: {
         backgroundColor: '#F4B0B1'
 
-      }           
+      }     
+            
     }}
     
     //
@@ -54,6 +57,7 @@ const TabNavigator = () => {
         options={{
           headerTitle: "Chats",
           tabBarLabel: "Chats",
+          headerTintColor:'white',
 
           tabBarActiveTintColor: 'black',
           
@@ -72,6 +76,7 @@ const TabNavigator = () => {
         name="Settings"
         component={SettingsScreen}
         options={{
+          headerTintColor:'white',
           headerTitle: "Settings",
           tabBarLabel: "Settings",
           tabBarActiveTintColor: 'black', 
@@ -97,10 +102,11 @@ const StackNavigator = () => {
           name="ChatScreen"
           component={ChatScreen}
           options={{
+            headerTintColor:'white',
             headerTitle: "",
             headerBackTitle: "Back",
             headerStyle: {
-              backgroundColor: '#F4B0B1',
+              backgroundColor: '#1B313E',
             },
           }}
         />
@@ -108,11 +114,12 @@ const StackNavigator = () => {
           name="ChatSettings"
           component={ChatSettingsScreen}
           options={{
+            headerTintColor:'white',
             headerTitle: "Setting",
             headerBackTitle: "Back",
             headerShadowVisible: false,
             headerStyle: {
-              backgroundColor: '#F4B0B1',
+              backgroundColor: '#1B313E',
             },
           }}
         />
@@ -120,10 +127,11 @@ const StackNavigator = () => {
           name="Contact"
           component={ContactScreen}
           options={{
+            headerTintColor:'white',
             headerTitle: "Contact info",
             headerBackTitle: "Back",
             headerStyle: {
-              backgroundColor: '#F4B0B1',
+              backgroundColor: '#1B313E',
             },
           }}
         />
@@ -131,8 +139,12 @@ const StackNavigator = () => {
           name="DataList"
           component={DataListScreen}
           options={{
+            headerTintColor:'white',
             headerTitle: "",
             headerBackTitle: "Back",
+            headerStyle: {
+              backgroundColor: '#1B313E',
+            },
           }}
         />
       </Stack.Group>
@@ -142,7 +154,8 @@ const StackNavigator = () => {
           name="NewChat"
           component={NewChatScreen}
           options={{headerStyle: {
-            backgroundColor: '#F4B0B1',
+            backgroundColor: '#1B313E',
+            headerTintColor:'white',
           },}}
           
         />

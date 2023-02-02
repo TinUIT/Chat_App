@@ -8,9 +8,7 @@ export default PageTitle = props => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginBottom: 10
-    },
+    
     text: {
         fontSize: 28,
         color: "white",
