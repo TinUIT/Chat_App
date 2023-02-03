@@ -69,6 +69,13 @@ const ContactScreen = props => {
             }
         </View>
 
+        <DataItem
+                    title="Starred messages"
+                    icon="staro"
+                    type="button"
+                    onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: Object.values(starredMessages), type: "messages", })}
+                />
+
         {
             commonChats.length > 0 &&
             <>
@@ -89,12 +96,7 @@ const ContactScreen = props => {
             </>
         }
         
-        <DataItem
-                    title="Starred messages"
-                    icon="staro"
-                    type="button"
-                    onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: Object.values(starredMessages), type: "messages", })}
-                />
+        
 
         {
             chatData && chatData.isGroupChat  &&
