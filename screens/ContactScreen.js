@@ -18,21 +18,14 @@ const ContactScreen = props => {
 
     const storedChats = useSelector(state => state.chats.chatsData);
     const [commonChats, setCommonChats] = useState([]);
-    const chatId = props.route.params.uid;
+    const chatId = props.route.params.chatId;
     const chatData = chatId && storedChats[chatId];
 
      // const chatData = useSelector(state => state.chats.chatsData[chatId] || {});
 
     
-     const starredMessages = useSelector(state => state.messages.starredMessages[chatId] ?? {});
-
-
-
-
-   
-
-   
-
+    const starredMessages = useSelector(state => state.messages.starredMessages[chatId] ?? {});
+    // console.log(starredMessages)
     useEffect(() => {
 
         const getCommonUserChats = async () => {

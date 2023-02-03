@@ -85,7 +85,7 @@ const ChatScreen = (props) => {
               iconName="alert-circle"
               onPress={() => chatData.isGroupChat ?
                 props.navigation.navigate("ChatSettings", { chatId }) :
-                props.navigation.navigate("Contact", { uid: chatUsers.find(uid => uid !== userData.userId) })}
+                props.navigation.navigate("Contact", { uid: chatUsers.find(uid => uid !== userData.userId), chatId  })}
             />
           }
         </HeaderButtons>
