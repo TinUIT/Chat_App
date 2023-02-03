@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useMemo, } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import DataItem from '../components/DataItem';
@@ -18,9 +18,20 @@ const ContactScreen = props => {
 
     const storedChats = useSelector(state => state.chats.chatsData);
     const [commonChats, setCommonChats] = useState([]);
-
-    const chatId = props.route.params.chatId;
+    const chatId = props.route.params.uid;
     const chatData = chatId && storedChats[chatId];
+
+     // const chatData = useSelector(state => state.chats.chatsData[chatId] || {});
+
+    
+     const starredMessages = useSelector(state => state.messages.starredMessages[chatId] ?? {});
+
+
+
+
+   
+
+   
 
     useEffect(() => {
 
@@ -50,7 +61,7 @@ const ContactScreen = props => {
         }
     }, [props.navigation, isLoading])
 
-    return <PageContainer>
+    return <View style={{ ...styles.container}}>
         <View style={styles.topContainer}>
             <ProfileImage
                 uri={currentUser.profilePicture}
@@ -84,6 +95,13 @@ const ContactScreen = props => {
                 }
             </>
         }
+        
+        <DataItem
+                    title="Starred messages"
+                    icon="staro"
+                    type="button"
+                    onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: Object.values(starredMessages), type: "messages", })}
+                />
 
         {
             chatData && chatData.isGroupChat  &&
@@ -98,7 +116,7 @@ const ContactScreen = props => {
             )
         }
 
-    </PageContainer>
+    </View>
 }
 
 const styles = StyleSheet.create({
@@ -106,6 +124,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 20
+    },
+    container:{
+        flex: 1,
+        paddingHorizontal: 20,
+        backgroundColor:'#1B313E',
+        borderTopColor: 'black',
+        borderTopWidth: 0.5,
     },
     about: {
         fontFamily: 'medium',
@@ -116,7 +141,7 @@ const styles = StyleSheet.create({
     heading: {
         fontFamily: 'bold',
         letterSpacing: 0.3,
-        color: colors.textColor,
+        color: colors.nearlyWhite,
         marginVertical: 8
     }
 });

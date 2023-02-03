@@ -23,18 +23,18 @@ const SettingsScreen = props => {
     const userData = useSelector(state => state.auth.userData);
     const starredMessages = useSelector(state => state.messages.starredMessages ?? {});
 
-    const sortedStarredMessages = useMemo(() => {
-        let result = [];
+    // const sortedStarredMessages = useMemo(() => {
+    //     let result = [];
 
-        const chats = Object.values(starredMessages);
+    //     const chats = Object.values(starredMessages);
 
-        chats.forEach(chat => {
-            const chatMessages = Object.values(chat);
-            result = result.concat(chatMessages);
-        })
+    //     chats.forEach(chat => {
+    //         const chatMessages = Object.values(chat);
+    //         result = result.concat(chatId);
+    //     })
 
-        return result;
-    }, [starredMessages]);
+    //     return result;
+    // }, [starredMessages]);
     
     const firstName = userData.firstName || "";
     const lastName = userData.lastName || "";
@@ -94,16 +94,16 @@ const SettingsScreen = props => {
             currentValues.about != about;
     }
     
-    return <PageContainer>
-        <PageTitle/>
-
+    return <View style={{ ...styles.container}}>
+        
         <ScrollView contentContainerStyle={styles.formContainer}>
 
             <ProfileImage
                 size={80}
                 userId={userData.userId}
                 uri={userData.profilePicture}
-                showEditButton={true} />
+                showEditButton={true} 
+                />
 
             <Input
                 id="firstName"
@@ -161,14 +161,6 @@ const SettingsScreen = props => {
                     disabled={!formState.formIsValid} />
             }
             </View>
-
-            <DataItem
-                type={"link"}
-                title="Starred messages"
-                hideImage={true}
-                onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: sortedStarredMessages, type: "messages" })}
-            />
-
             <SubmitButton
                 title="Logout"
                 onPress={() => dispatch(userLogout(userData)) }
@@ -176,15 +168,22 @@ const SettingsScreen = props => {
                 color={colors.red}/>
 
         </ScrollView>   
-    </PageContainer>
+    </View>
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingHorizontal: 20,
+        backgroundColor:'#1B313E',
+        borderTopColor: 'black',
+        borderTopWidth: 0.5,
+        
+
     },
     formContainer: { 
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop:20
     }
 })
 

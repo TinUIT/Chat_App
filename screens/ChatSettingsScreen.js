@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import DataItem from '../components/DataItem';
 import Input from '../components/Input';
@@ -25,7 +25,7 @@ const ChatSettingsScreen = props => {
 
     const initialState = {
         inputValues: { chatName: chatData.chatName },
-        inputValidities: { chatName: undefined},
+        inputValidities: { chatName: undefined },
         formIsValid: false
     }
 
@@ -60,7 +60,7 @@ const ChatSettingsScreen = props => {
 
     const saveHandler = useCallback(async () => {
         const updatedValues = formState.inputValues;
-        
+
         try {
             setIsLoading(true);
             await updateChatData(chatId, userData.userId, updatedValues);
@@ -100,10 +100,10 @@ const ChatSettingsScreen = props => {
 
     if (!chatData.users) return null;
 
-    return <PageContainer>
+    return <View style={{ ...styles.container }}>
         <PageTitle />
 
-        <ScrollView 
+        <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollView}>
             <ProfileImage
@@ -123,18 +123,36 @@ const ChatSettingsScreen = props => {
                 onInputChanged={inputChangedHandler}
                 errorText={formState.inputValidities["chatName"]}
             />
-
-
-            <View style={styles.sectionContainer}>
-                <Text style={styles.heading}>{chatData.users.length} Participants</Text>
-
+            <TouchableOpacity>
                 <DataItem
                     title="Add users"
                     icon="plus"
                     type="button"
-                    style='borderBottomColor:0'
-                     onPress={() => props.navigation.navigate("NewChat", { isGroupChat: true, existingUsers: chatData.users, chatId })}
+                    onPress={() => props.navigation.navigate("NewChat", { isGroupChat: true, existingUsers: chatData.users, chatId })}
                 />
+                <DataItem
+                    title="Starred messages"
+                    icon="staro"
+                    type="button"
+                    onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: Object.values(starredMessages), type: "messages", })}
+                />
+            </TouchableOpacity>
+
+
+            <View style={styles.sectionContainer}>
+                <View style={styles.SeeContainer}>
+                    <Text style={styles.heading}>{chatData.users.length} Participants</Text>
+                    {chatData.users.length > 4 &&
+                        <TouchableOpacity
+                            type={"link"}
+                            hideImage={true}
+                            onPress={() => props.navigation.navigate("DataList", { title: "Participants", data: chatData.users, type: "users", chatId })}>
+                            <Text style={styles.seeallText}> See all </Text>
+                        </TouchableOpacity>}
+
+                </View>
+
+
 
                 {
                     chatData.users.slice(0, 4).map(uid => {
@@ -150,38 +168,25 @@ const ChatSettingsScreen = props => {
                     })
                 }
 
-                {
-                    chatData.users.length > 4 &&
-                    <DataItem
-                        type={"link"}
-                        title="View all"
-                        hideImage={true}
-                        onPress={() => props.navigation.navigate("DataList", { title: "Participants", data: chatData.users, type: "users", chatId })}
-                    />
-                }
+
             </View>
 
 
 
-            { showSuccessMessage && <Text>Saved!</Text> }
+            {showSuccessMessage && <Text>Saved!</Text>}
 
             {
                 isLoading ?
-                <ActivityIndicator size={'small'} color={colors.primary} /> :
-                hasChanges() && <SubmitButton
-                    title="Save changes"
-                    color={colors.primary}
-                    onPress={saveHandler}
-                    disabled={!formState.formIsValid}
-                />
+                    <ActivityIndicator size={'small'} color={colors.primary} /> :
+                    hasChanges() && <SubmitButton
+                        title="Save changes"
+                        color={colors.primary}
+                        onPress={saveHandler}
+                        disabled={!formState.formIsValid}
+                    />
             }
-            <View style={{ width: '100%'}}>
-            <DataItem
-                type={"link"}
-                title="Starred messages"
-                hideImage={true}
-                onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: Object.values(starredMessages), type: "messages" })}
-            />
+            <View style={{ width: '100%' }}>
+
             </View>
         </ScrollView>
 
@@ -193,14 +198,18 @@ const ChatSettingsScreen = props => {
                 style={{ marginBottom: 20 }}
             />
         }
-    </PageContainer>
+    </View>
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        backgroundColor: '#1B313E',
+        borderTopColor: 'black',
+        borderTopWidth: 0.5,
     },
     scrollView: {
         justifyContent: 'center',
@@ -215,6 +224,17 @@ const styles = StyleSheet.create({
         color: "white",
         fontFamily: 'bold',
         letterSpacing: 0.3
+    },
+    SeeContainer: {
+        flexDirection: 'row',
+        width: '100%',
+
+    },
+    seeallText: {
+        marginLeft: 170,
+        marginTop: 9,
+        fontSize: 15,
+        color: colors.primary,
     }
 })
 

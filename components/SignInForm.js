@@ -124,7 +124,7 @@ const SignInForm = props => {
                     style={styles.Icon} >
 
                 </Image>
-                <Text style={{ fontSize: 13, color: '#666666' }}>   Show password !</Text>
+                <Text style={{ fontSize: 13, color: '#666666' }}>   Show password!</Text>
             </TouchableOpacity>
 
 
