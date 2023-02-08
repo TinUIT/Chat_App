@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import colors from '../constants/colors';
 import { Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
@@ -6,17 +6,17 @@ import uuid from 'react-native-uuid';
 import * as Clipboard from 'expo-clipboard';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { starMessage } from '../utils/actions/chatActions';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';  
 
 function formatAmPm(dateString) {
     const date = new Date(dateString);
     var hours = date.getHours();
-    var minutes = date.getMinutes();
+    var minutes = date.getMinutes();        
     var ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? '0'+minutes : minutes;
-    return hours + ':' + minutes + ' ' + ampm;
+    return hours + ':' + minutes + ' ' + ampm ;
   }
 
 const MenuItem = props => {
@@ -95,10 +95,16 @@ const Bubble = props => {
 
     const isStarred = isUserMessage && starredMessages[messageId] !== undefined;
     const replyingToUser = replyingTo && storedUsers[replyingTo.sentBy];
+    const [isDateShow, setDateShow] = useState(false);
+    
 
     return (
+        <View>
+            {isDateShow &&  <Text style={styles.Show}>{((new Date(date)).getDate())}/{((new Date(date)).getMonth()+1)}/{((new Date(date)).getFullYear())}</Text>} 
         <View style={wrapperStyle}>
-            <Container onLongPress={() => menuRef.current.props.ctx.menuActions.openMenu(id.current)} style={{ width: '100%' }}>
+             
+            <Container onLongPress={() => menuRef.current.props.ctx.menuActions.openMenu(id.current)} style={{ width: '100%' }}
+                     onPress={()=>{isDateShow ? setDateShow(false): setDateShow(true)} }>
                 <View style={bubbleStyle}>
 
                     {
@@ -148,6 +154,7 @@ const Bubble = props => {
 
                 </View>
             </Container>
+        </View>
         </View>
     )
 }
@@ -203,6 +210,12 @@ const styles = StyleSheet.create({
         width: 300,
         height: 300,
         marginBottom: 5
+    },
+    Show: {
+        color:'#FFFFFF',
+        textAlign:"center",
+        fontSize:12
+        
     }
 })
 
