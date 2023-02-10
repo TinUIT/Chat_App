@@ -15,7 +15,8 @@ const DataItem = props => {
     const hideImage = props.hideImage && props.hideImage === true;
     
     return (
-        <TouchableWithoutFeedback onPress={props.onPress}>
+        <TouchableWithoutFeedback 
+        onPress={props.onPress}>
             <View style={styles.container}>
                 
 

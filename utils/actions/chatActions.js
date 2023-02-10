@@ -28,18 +28,18 @@ export const createChat = async (loggedInUserId, chatData) => {
 
 export const sendTextMessage = async (chatId, senderData, messageText, replyTo, chatUsers) => {
     console.log("sendTextMessage");
-    await sendMessage(chatId, senderData.userId, messageText, null, replyTo, null);
+    await sendMessage(chatId, senderData.userId, messageText, null, replyTo, null,false);
 
     const otherUsers = chatUsers.filter(uid => uid !== senderData.userId);
     await sendPushNotificationForUsers(otherUsers, `${senderData.firstName} ${senderData.lastName}`, messageText, chatId);
 }
 
 export const sendInfoMessage = async (chatId, senderId, messageText) => {
-    await sendMessage(chatId, senderId, messageText, null, null, "info");
+    await sendMessage(chatId, senderId, messageText, null, null, "info",false);
 }
 
 export const sendImage = async (chatId, senderData, imageUrl, replyTo, chatUsers) => {
-    await sendMessage(chatId, senderData.userId, 'Image', imageUrl, replyTo, null);
+    await sendMessage(chatId, senderData.userId, 'Image', imageUrl, replyTo, null,false);
 
     const otherUsers = chatUsers.filter(uid => uid !== senderData.userId);
     await sendPushNotificationForUsers(otherUsers, `${senderData.firstName} ${senderData.lastName}`, `${senderData.firstName} send an image`);
@@ -57,12 +57,13 @@ export const updateChatData = async (chatId, userId, chatData) => {
     })
 }
 
-const sendMessage = async (chatId, senderId, messageText, imageUrl, replyTo, type) => {
+const sendMessage = async (chatId, senderId, messageText, imageUrl, replyTo, type, isUnSend) => {
     const app = getFirebaseApp();
     const dbRef = ref(getDatabase());
     const messagesRef = child(dbRef, `messages/${chatId}`);
 
     const messageData = {
+        isUnSend: isUnSend,
         sentBy: senderId,
         sentAt: new Date().toISOString(),
         text: messageText
@@ -116,6 +117,30 @@ export const starMessage = async (messageId, chatId, userId) => {
         console.log(error);        
     }
 }
+export const UnSend=async (messageId,chatId) => {
+    try {
+        const app = getFirebaseApp();
+        const dbRef = ref(getDatabase(app));
+        const childRef = child(dbRef, `messages/${chatId}/${messageId}`);
+
+        const isUnSend = true;
+        const UnsendMess='The message is unsent!'
+        console.log(childRef)
+        console.log(messageId)
+        await set(childRef,{
+            isUnSend:isUnSend,
+            text:UnsendMess
+        
+        });
+
+        
+            
+    } catch (error) {
+        console.log(error);        
+    }
+
+}
+
 
 export const removeUserFromChat = async (userLoggedInData, userToRemoveData, chatData) => {
     const userToRemoveId = userToRemoveData.userId;

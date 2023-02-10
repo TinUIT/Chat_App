@@ -36,6 +36,7 @@ const ChatScreen = (props) => {
   const [replyingTo, setReplyingTo] = useState();
   const [tempImageUri, setTempImageUri] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+ 
 
   const flatList = useRef();
 
@@ -163,6 +164,7 @@ const ChatScreen = (props) => {
       
     }
   }, [isLoading, tempImageUri, chatId])
+  
 
   return (
     <SafeAreaView edges={["right", "left", "bottom"]} style={styles.container}>
@@ -204,7 +206,10 @@ const ChatScreen = (props) => {
                   else {
                     messageType = "theirMessage"
                   }
-
+                  if (message.isUnSend) {
+                    messageType = "unsend"
+                  }
+                  console.log(messageType)
                   const sender = message.sentBy && storedUsers[message.sentBy];
                   const name = sender && `${sender.firstName} ${sender.lastName}`;
 

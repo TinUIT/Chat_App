@@ -4,9 +4,10 @@ import colors from '../constants/colors';
 import { Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 import uuid from 'react-native-uuid';
 import * as Clipboard from 'expo-clipboard';
-import { Feather, FontAwesome } from '@expo/vector-icons';
-import { starMessage } from '../utils/actions/chatActions';
+import { Feather, FontAwesome,Entypo } from '@expo/vector-icons';
+import { starMessage, UnSend } from '../utils/actions/chatActions';
 import { useSelector } from 'react-redux';  
+
 
 function formatAmPm(dateString) {
     const date = new Date(dateString);
@@ -49,6 +50,13 @@ const Bubble = props => {
     const dateString = date && formatAmPm(date);
 
     switch (type) {
+        case "unsend":
+            textStyle.color = colors.grey;
+            wrapperStyle.justifyContent = 'flex-end';
+            bubbleStyle.backgroundColor = '#E7FED6';
+            bubbleStyle.maxWidth = '90%';
+            Container = TouchableWithoutFeedback;
+            break;
         case "system":
             textStyle.color = '#65644A';
             bubbleStyle.backgroundColor = colors.beige;
@@ -92,18 +100,23 @@ const Bubble = props => {
             console.log(error);
         }
     }
+    
 
     const isStarred = isUserMessage && starredMessages[messageId] !== undefined;
     const replyingToUser = replyingTo && storedUsers[replyingTo.sentBy];
     const [isDateShow, setDateShow] = useState(false);
-    
+    const clickMenu = async(type) =>{
+        if (type !== "unsend") {
+            menuRef.current.props.ctx.menuActions.openMenu(id.current)
+        }
+    }
 
     return (
         <View>
             {isDateShow &&  <Text style={styles.Show}>{((new Date(date)).getDate())}/{((new Date(date)).getMonth()+1)}/{((new Date(date)).getFullYear())}</Text>} 
         <View style={wrapperStyle}>
              
-            <Container onLongPress={() => menuRef.current.props.ctx.menuActions.openMenu(id.current)} style={{ width: '100%' }}
+            <Container onLongPress={() => clickMenu(type)} style={{ width: '100%' }}
                      onPress={()=>{isDateShow ? setDateShow(false): setDateShow(true)} }>
                 <View style={bubbleStyle}>
 
@@ -147,7 +160,7 @@ const Bubble = props => {
                         <MenuItem text='Copy to clipboard' icon={'copy'} onSelect={() => copyToClipboard(text)} />
                         <MenuItem text={`${isStarred ? 'Unstar' : 'Star'} message`} icon={isStarred ? 'star-o' : 'star'} iconPack={FontAwesome} onSelect={() => starMessage(messageId, chatId, userId)} />
                         <MenuItem text='Reply' icon='arrow-left-circle' onSelect={setReply} />
-                        
+                        {type!=="theirMessage" && <MenuItem text='Unsend' icon={'back-in-time'} iconPack={Entypo} onSelect={()=>UnSend(messageId,chatId)}/>}
                     </MenuOptions>
                 </Menu>
 
@@ -173,6 +186,7 @@ const styles = StyleSheet.create({
         borderColor: '#E2DACC',
         borderWidth: 1,
         marginTop:5,
+        marginRight:10,
     },
     text: {
         fontFamily: 'regular',
