@@ -14,7 +14,7 @@ const ContactScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const storedUsers = useSelector(state => state.users.storedUsers);
     const userData = useSelector(state => state.auth.userData);
-    const currentUser = storedUsers[props.route.params.uid];
+    const currentUser = storedUsers[props.route.params.uid];    
 
     const storedChats = useSelector(state => state.chats.chatsData);
     const [commonChats, setCommonChats] = useState([]);
@@ -112,7 +112,7 @@ const ContactScreen = props => {
             )
         }
         {
-            chatData.blockContact ?
+            chatData.blockContact===userData.userId ?
             (<SubmitButton
 
                 title={'Unblock'}
@@ -124,7 +124,7 @@ const ContactScreen = props => {
 
                 title={'Block'}
                 color={colors.red}
-                onPress={() => BlockContact(chatId)}/>
+                onPress={() => BlockContact(chatId, userData.userId)}/>
                 
 
         }

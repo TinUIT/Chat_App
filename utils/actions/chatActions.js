@@ -132,25 +132,20 @@ export const UnSend = async (messageId, chatId) => {
 
         });
 
-
-
     } catch (error) {
         console.log(error);
     }
 
 }
-export const BlockContact = async (chatId) => {
+export const BlockContact = async (chatId, useId) => {
     try {
         const app = getFirebaseApp();
         const dbRef = ref(getDatabase(app));
         const childRef = child(dbRef, `chats/${chatId}`);
-        const blockContact = true;
+        const blockContact = useId;
         await update(childRef, {
             blockContact:blockContact
-
         });
-
-
 
     } catch (error) {
         console.log(error);
@@ -164,7 +159,6 @@ export const UnBlockContact = async (chatId) => {
         const blockContact = false;
         await update(childRef, {
             blockContact:blockContact
-
         });
 
 
