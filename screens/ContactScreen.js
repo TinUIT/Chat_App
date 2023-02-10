@@ -111,8 +111,8 @@ const ContactScreen = props => {
                     />
             )
         }
-        {
-            chatData.blockContact===userData.userId ?
+        {   
+            chatData.blockContact==userData.userId ?
             (<SubmitButton
 
                 title={'Unblock'}
@@ -121,7 +121,7 @@ const ContactScreen = props => {
             /> ) : 
             
             <SubmitButton
-
+                disabled={chatData.blockContact!==userData.userId  && chatData.blockContact}
                 title={'Block'}
                 color={colors.red}
                 onPress={() => BlockContact(chatId, userData.userId)}/>
