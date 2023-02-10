@@ -206,9 +206,11 @@ const ChatScreen = (props) => {
                   else {
                     messageType = "theirMessage"
                   }
-                  if (message.isUnSend) {
-                    messageType = "unsend"
-                  }
+                  if (message.isUnSend && isOwnMessage) {
+                    messageType = "myunsend"
+                   } else if (message.isUnSend && !isOwnMessage)
+                    messageType = "theirunsend"
+                  
                   console.log(messageType)
                   const sender = message.sentBy && storedUsers[message.sentBy];
                   const name = sender && `${sender.firstName} ${sender.lastName}`;

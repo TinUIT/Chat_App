@@ -50,10 +50,16 @@ const Bubble = props => {
     const dateString = date && formatAmPm(date);
 
     switch (type) {
-        case "unsend":
+        case "myunsend":
             textStyle.color = colors.grey;
             wrapperStyle.justifyContent = 'flex-end';
             bubbleStyle.backgroundColor = '#E7FED6';
+            bubbleStyle.maxWidth = '90%';
+            Container = TouchableWithoutFeedback;
+            break;
+        case "theirunsend":
+            textStyle.color = colors.grey;
+            wrapperStyle.justifyContent = 'flex-start';
             bubbleStyle.maxWidth = '90%';
             Container = TouchableWithoutFeedback;
             break;

@@ -127,7 +127,7 @@ export const UnSend=async (messageId,chatId) => {
         const UnsendMess='The message is unsent!'
         console.log(childRef)
         console.log(messageId)
-        await set(childRef,{
+        await update(childRef,{
             isUnSend:isUnSend,
             text:UnsendMess
         
