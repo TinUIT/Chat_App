@@ -69,7 +69,7 @@ const ChatScreen = (props) => {
  
     const otherUserId = chatUsers.find(uid => uid !== userData.userId);
     const otherUserData = storedUsers[otherUserId];
-    console.log(chatData.chatName)
+    console.log(chatData.blockContact)
     return otherUserData && `${otherUserData.firstName} ${otherUserData.lastName}`;
   }
 
@@ -101,7 +101,7 @@ const ChatScreen = (props) => {
       let id = chatId;
       if (!id) {
         // No chat Id. Create the chat
-        id = await createChat(userData.userId, props.route.params.newChatData);
+        id = await createChat(userData.userId, props.route.params.newChatData,false);
         setChatId(id);
       }
 
@@ -147,7 +147,7 @@ const ChatScreen = (props) => {
       let id = chatId;
       if (!id) {
         // No chat Id. Create the chat
-        id = await createChat(userData.userId, props.route.params.newChatData);
+        id = await createChat(userData.userId, props.route.params.newChatData,false);
         setChatId(id);
       }
 
@@ -211,7 +211,7 @@ const ChatScreen = (props) => {
                    } else if (message.isUnSend && !isOwnMessage)
                     messageType = "theirunsend"
                   
-                  console.log(messageType)
+                  
                   const sender = message.sentBy && storedUsers[message.sentBy];
                   const name = sender && `${sender.firstName} ${sender.lastName}`;
 
@@ -244,7 +244,7 @@ const ChatScreen = (props) => {
           }
 
         </ImageBackground>
-
+          { !chatData.blockContact ?
         <View style={styles.inputContainer}>
           <TouchableOpacity
             style={styles.mediaButton}
@@ -308,7 +308,7 @@ const ChatScreen = (props) => {
             />
 
 
-        </View>
+        </View>:<View style={styles.inputContainer}><Text style={styles.UnChat}>You can't send message</Text></View>}
     </SafeAreaView>
   );
 };
@@ -330,6 +330,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: 50,
     backgroundColor: '#ededed',
+    justifyContent:'center',
   },
   textbox: {
     flex: 1,
@@ -353,6 +354,13 @@ const styles = StyleSheet.create({
     fontFamily: 'medium',
     letterSpacing: 0.3,
     color: colors.textColor
+  },
+  UnChat:{
+    color:colors.red,
+    // marginLeft:90,
+    fontSize:16,
+    marginTop:3,
+
   }
 });
 

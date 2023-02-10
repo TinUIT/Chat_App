@@ -40,6 +40,7 @@ const AuthScreen = props => {
                             height: isSignUp ? 600: 400,
                             alignItems: "center",
                             borderRadius: 20,
+                            
                 }}>
                     {
                         isSignUp ?

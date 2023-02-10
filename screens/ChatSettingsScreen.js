@@ -190,14 +190,14 @@ const ChatSettingsScreen = props => {
             </View>
         </ScrollView>
 
-        {
+        {/* {
             <SubmitButton
                 title="Leave chat"
                 color={colors.red}
                 onPress={() => leaveChat()}
                 style={{ marginBottom: 20 }}
             />
-        }
+        } */}
     </View>
 };
 

@@ -55,6 +55,7 @@ const Bubble = props => {
             wrapperStyle.justifyContent = 'flex-end';
             bubbleStyle.backgroundColor = '#E7FED6';
             bubbleStyle.maxWidth = '90%';
+            bubbleStyle.marginRight=0;
             Container = TouchableWithoutFeedback;
             break;
         case "theirunsend":
@@ -78,6 +79,7 @@ const Bubble = props => {
             wrapperStyle.justifyContent = 'flex-end';
             bubbleStyle.backgroundColor = '#E7FED6';
             bubbleStyle.maxWidth = '90%';
+            bubbleStyle.marginRight=0;
             Container = TouchableWithoutFeedback;
             isUserMessage = true;
             break;

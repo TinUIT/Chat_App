@@ -7,11 +7,11 @@ import PageTitle from '../components/PageTitle';
 import ProfileImage from '../components/ProfileImage';
 import SubmitButton from '../components/SubmitButton';
 import colors from '../constants/colors';
-import { getUserChats} from '../utils/actions/userActions';
-import {removeUserFromChat} from '../utils/actions/chatActions'
+import { getUserChats } from '../utils/actions/userActions';
+import { removeUserFromChat, BlockContact,UnBlockContact } from '../utils/actions/chatActions'
 
 const ContactScreen = props => {
-    const[isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const storedUsers = useSelector(state => state.users.storedUsers);
     const userData = useSelector(state => state.auth.userData);
     const currentUser = storedUsers[props.route.params.uid];
@@ -21,9 +21,10 @@ const ContactScreen = props => {
     const chatId = props.route.params.chatId;
     const chatData = chatId && storedChats[chatId];
 
-     // const chatData = useSelector(state => state.chats.chatsData[chatId] || {});
+    // const chatData = useSelector(state => state.chats.chatsData[chatId] || {});
 
-    
+
+
     const starredMessages = useSelector(state => state.messages.starredMessages[chatId] ?? {});
     // console.log(starredMessages)
     useEffect(() => {
@@ -36,7 +37,7 @@ const ContactScreen = props => {
         }
 
         getCommonUserChats();
-        
+
     }, [])
 
     const removeFromChat = useCallback(async () => {
@@ -54,7 +55,7 @@ const ContactScreen = props => {
         }
     }, [props.navigation, isLoading])
 
-    return <View style={{ ...styles.container}}>
+    return <View style={{ ...styles.container }}>
         <View style={styles.topContainer}>
             <ProfileImage
                 uri={currentUser.profilePicture}
@@ -62,7 +63,7 @@ const ContactScreen = props => {
                 style={{ marginBottom: 20 }}
             />
 
-            <PageTitle text={`${currentUser.firstName} ${currentUser.lastName}`} style={{textColor:'white'}} />
+            <PageTitle text={`${currentUser.firstName} ${currentUser.lastName}`} style={{ textColor: 'white' }} />
             {
                 currentUser.about &&
                 <Text style={styles.about} numberOfLines={2}>{currentUser.about}</Text>
@@ -70,11 +71,11 @@ const ContactScreen = props => {
         </View>
 
         <DataItem
-                    title="Starred messages"
-                    icon="staro"
-                    type="button"
-                    onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: Object.values(starredMessages), type: "messages", })}
-                />
+            title="Starred messages"
+            icon="staro"
+            type="button"
+            onPress={() => props.navigation.navigate("DataList", { title: "Starred messages", data: Object.values(starredMessages), type: "messages", })}
+        />
 
         {
             commonChats.length > 0 &&
@@ -84,32 +85,52 @@ const ContactScreen = props => {
                     commonChats.map(cid => {
                         const chatData = storedChats[cid];
                         return <DataItem
-                               key={cid} 
-                               title={chatData.chatName}
-                               subTitle={chatData.latestMessageText}
-                               type="link"
-                               onPress={() => props.navigation.push("ChatScreen", { chatId: cid })}
-                               image={chatData.chatImage}
-                            />
+                            key={cid}
+                            title={chatData.chatName}
+                            subTitle={chatData.latestMessageText}
+                            type="link"
+                            onPress={() => props.navigation.push("ChatScreen", { chatId: cid })}
+                            image={chatData.chatImage}
+                        />
                     })
                 }
             </>
         }
-        
-        
+
+
 
         {
-            chatData && chatData.isGroupChat  &&
+            chatData && chatData.isGroupChat &&
             (
                 isLoading ?
-                <ActivityIndicator size= 'small' color={colors.primary} /> :
-                <   SubmitButton
-                    title="Remove from chat"
-                    color={colors.red}
-                    onPress={removeFromChat}
-                />
+                    <ActivityIndicator size='small' color={colors.primary} /> :
+                    <   SubmitButton
+                        title="Remove from chat"
+                        color={colors.red}
+                        onPress={removeFromChat}
+                    />
             )
         }
+        {
+            chatData.blockContact ?
+            (<SubmitButton
+
+                title={'Unblock'}
+                color={colors.blue}
+                onPress={() => UnBlockContact(chatId)}
+            /> ) : 
+            
+            <SubmitButton
+
+                title={'Block'}
+                color={colors.red}
+                onPress={() => BlockContact(chatId)}/>
+                
+
+        }
+        {console.log(chatData.blockContact)}
+
+
 
     </View>
 }
@@ -120,10 +141,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginVertical: 20
     },
-    container:{
+    container: {
         flex: 1,
         paddingHorizontal: 20,
-        backgroundColor:'#1B313E',
+        backgroundColor: '#1B313E',
         borderTopColor: 'black',
         borderTopWidth: 0.5,
     },

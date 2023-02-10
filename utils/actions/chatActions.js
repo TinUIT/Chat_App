@@ -1,16 +1,18 @@
 import { child, get, getDatabase, push, ref, remove, set, update } from "firebase/database";
+import { async } from "validate.js";
 import { getFirebaseApp } from "../firebaseHelper";
 import { getUserPushTokens } from "./authActions";
 import { addUserChat, deleteUserChat, getUserChats } from "./userActions";
 
-export const createChat = async (loggedInUserId, chatData) => {
+export const createChat = async (loggedInUserId, chatData,blockContact) => {
 
     const newChatData = {
         ...chatData,
         createdBy: loggedInUserId,
         updatedBy: loggedInUserId,
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
+        blockContact: blockContact,
     };
 
     const app = getFirebaseApp();
@@ -28,18 +30,18 @@ export const createChat = async (loggedInUserId, chatData) => {
 
 export const sendTextMessage = async (chatId, senderData, messageText, replyTo, chatUsers) => {
     console.log("sendTextMessage");
-    await sendMessage(chatId, senderData.userId, messageText, null, replyTo, null,false);
+    await sendMessage(chatId, senderData.userId, messageText, null, replyTo, null, false);
 
     const otherUsers = chatUsers.filter(uid => uid !== senderData.userId);
     await sendPushNotificationForUsers(otherUsers, `${senderData.firstName} ${senderData.lastName}`, messageText, chatId);
 }
 
 export const sendInfoMessage = async (chatId, senderId, messageText) => {
-    await sendMessage(chatId, senderId, messageText, null, null, "info",false);
+    await sendMessage(chatId, senderId, messageText, null, null, "info", false);
 }
 
 export const sendImage = async (chatId, senderData, imageUrl, replyTo, chatUsers) => {
-    await sendMessage(chatId, senderData.userId, 'Image', imageUrl, replyTo, null,false);
+    await sendMessage(chatId, senderData.userId, 'Image', imageUrl, replyTo, null, false);
 
     const otherUsers = chatUsers.filter(uid => uid !== senderData.userId);
     await sendPushNotificationForUsers(otherUsers, `${senderData.firstName} ${senderData.lastName}`, `${senderData.firstName} send an image`);
@@ -114,31 +116,62 @@ export const starMessage = async (messageId, chatId, userId) => {
             await set(childRef, starredMessageData);
         }
     } catch (error) {
-        console.log(error);        
+        console.log(error);
     }
 }
-export const UnSend=async (messageId,chatId) => {
+export const UnSend = async (messageId, chatId) => {
     try {
         const app = getFirebaseApp();
         const dbRef = ref(getDatabase(app));
         const childRef = child(dbRef, `messages/${chatId}/${messageId}`);
-
         const isUnSend = true;
-        const UnsendMess='The message is unsent!'
-        console.log(childRef)
-        console.log(messageId)
-        await update(childRef,{
-            isUnSend:isUnSend,
-            text:UnsendMess
-        
+        const UnsendMess = 'The message is unsent!'
+        await update(childRef, {
+            isUnSend: isUnSend,
+            text: UnsendMess
+
         });
 
-        
-            
+
+
     } catch (error) {
-        console.log(error);        
+        console.log(error);
     }
 
+}
+export const BlockContact = async (chatId) => {
+    try {
+        const app = getFirebaseApp();
+        const dbRef = ref(getDatabase(app));
+        const childRef = child(dbRef, `chats/${chatId}`);
+        const blockContact = true;
+        await update(childRef, {
+            blockContact:blockContact
+
+        });
+
+
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const UnBlockContact = async (chatId) => {
+    try {
+        const app = getFirebaseApp();
+        const dbRef = ref(getDatabase(app));
+        const childRef = child(dbRef, `chats/${chatId}`);
+        const blockContact = false;
+        await update(childRef, {
+            blockContact:blockContact
+
+        });
+
+
+
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
@@ -200,7 +233,7 @@ const sendPushNotificationForUsers = (chatUsers, title, body, chatId) => {
         console.log("sendPushNotificationForUsers");
         const tokens = await getUserPushTokens(uid);
 
-        for(const key in tokens) {
+        for (const key in tokens) {
             const token = tokens[key];
 
             await fetch("https://exp.host/--/api/v2/push/send", {
@@ -212,7 +245,7 @@ const sendPushNotificationForUsers = (chatUsers, title, body, chatId) => {
                     to: token,
                     title,
                     body,
-                    data: {chatId}
+                    data: { chatId }
                 })
             })
         }

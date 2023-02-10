@@ -10,8 +10,8 @@ const PageContainer = props => {
 
 const styles = StyleSheet.create({
     container: {
-        // paddingHorizontal: 20,
-        marginLeft:20,
+        paddingHorizontal: 15,
+        //marginLeft:20,
         flex: 1,
         
     }

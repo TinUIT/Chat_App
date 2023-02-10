@@ -95,7 +95,7 @@ const ChatListScreen = props => {
 
     }, [props.route?.params])
 
-    return <PageContainer>
+    return <PageContainer style={styles.container}>
 
         <PageTitle />
         <FlatList
@@ -142,7 +142,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginLeft:0.5
     },
     newGroupText: {
         color: colors.blue,
