@@ -125,11 +125,15 @@ export const UnSend = async (messageId, chatId) => {
         const dbRef = ref(getDatabase(app));
         const childRef = child(dbRef, `messages/${chatId}/${messageId}`);
         const isUnSend = true;
-        const UnsendMess = 'The message is unsent!'
+        const UnsendMess = 'The message is unsent!';
+        const latestMessageText='The message is unsent!'
         await update(childRef, {
             isUnSend: isUnSend,
-            text: UnsendMess
-
+            text: UnsendMess,
+        });
+        const chatRef = child(dbRef, `chats/${chatId}`);
+        await update(chatRef, {
+            latestMessageText: latestMessageText
         });
 
     } catch (error) {

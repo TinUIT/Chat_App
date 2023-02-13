@@ -168,7 +168,7 @@ const Bubble = props => {
                         <MenuItem text='Copy to clipboard' icon={'copy'} onSelect={() => copyToClipboard(text)} />
                         <MenuItem text={`${isStarred ? 'Unstar' : 'Star'} message`} icon={isStarred ? 'star-o' : 'star'} iconPack={FontAwesome} onSelect={() => starMessage(messageId, chatId, userId)} />
                         <MenuItem text='Reply' icon='arrow-left-circle' onSelect={setReply} />
-                        {type!=="theirMessage" && <MenuItem text='Unsend' icon={'back-in-time'} iconPack={Entypo} onSelect={()=>UnSend(messageId,chatId)}/>}
+                        {type!=="theirMessage" && type!=='theirunsend' && type!=='myunsend' && <MenuItem text='Unsend' icon={'back-in-time'} iconPack={Entypo} onSelect={()=>UnSend(messageId,chatId)}/>}
                     </MenuOptions>
                 </Menu>
 
