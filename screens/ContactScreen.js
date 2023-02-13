@@ -111,7 +111,7 @@ const ContactScreen = props => {
                     />
             )
         }
-        {   
+        {    chatData && !chatData.isGroupChat && (
             chatData.blockContact==userData.userId ?
             (<SubmitButton
 
@@ -124,7 +124,7 @@ const ContactScreen = props => {
                 disabled={chatData.blockContact!==userData.userId  && chatData.blockContact}
                 title={'Block'}
                 color={colors.red}
-                onPress={() => BlockContact(chatId, userData.userId)}/>
+                onPress={() => BlockContact(chatId, userData.userId)}/>)
                 
 
         }
