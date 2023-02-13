@@ -9,6 +9,7 @@ import SubmitButton from '../components/SubmitButton';
 import colors from '../constants/colors';
 import { getUserChats } from '../utils/actions/userActions';
 import { removeUserFromChat, BlockContact,UnBlockContact } from '../utils/actions/chatActions'
+import { ScrollView } from 'react-native-gesture-handler';
 
 const ContactScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
@@ -56,6 +57,7 @@ const ContactScreen = props => {
     }, [props.navigation, isLoading])
 
     return <View style={{ ...styles.container }}>
+        <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.topContainer}>
             <ProfileImage
                 uri={currentUser.profilePicture}
@@ -137,8 +139,9 @@ const ContactScreen = props => {
         {console.log(chatData.blockContact)}
 
 
-
+        </ScrollView>
     </View>
+   
 }
 
 const styles = StyleSheet.create({
