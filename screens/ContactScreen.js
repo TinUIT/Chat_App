@@ -69,14 +69,13 @@ const ContactScreen = props => {
                 <Text style={styles.about} numberOfLines={2}>{currentUser.about}</Text>
             }
         </View>
-
+        
         <DataItem
             title="Search messages"
             icon="search1"
             type="button"
             onPress={() => props.navigation.navigate("SearchMessageScreen", { title: "Search messages", chatId})}
         />
-        
         <DataItem
             title="Starred messages"
             icon="staro"
