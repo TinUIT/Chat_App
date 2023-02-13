@@ -11,9 +11,6 @@ import { SearchMessages } from '../utils/actions/userActions';
 const SearchMessageScreen = props => {
 
     const storedUsers = useSelector(state => state.users.storedUsers);
-    // const userData = useSelector(state => state.users.userData);
-    const messagesData = useSelector(state => state.messages.messagesData);
-    const existingUsers = props.route.params && props.route.params.existingUsers;
     
     const { title, data, type, chatId } = props.route.params;
     const [searchTerm, setSearchTerm] = useState('');
@@ -21,32 +18,7 @@ const SearchMessageScreen = props => {
     const [noResultsFound, setNoResultsFound] = useState(false);
     const [users, setUsers] = useState();
     const [messages, setMessages] = useState();
-    const d = [
-        {id:'1', value:'A'},
-        {id:'2', value:'A'},
-    ]
-    const chatMessages = useSelector(state => {
-        if (!chatId) return [];
     
-        const chatMessagesData = state.messages.messagesData[chatId];
-    
-        if (!chatMessagesData) return [];
-    
-        const messageList = [];
-        for (const key in chatMessagesData) {
-          const message = chatMessagesData[key];
-    
-          messageList.push({
-            key,
-            ...message
-          });
-        }
-    
-        return messageList;
-      });
-    
-    const [ChatList, setChatList] = useState(chatMessages);
-
     useEffect(() => {
         console.log(searchTerm)
         props.navigation.setOptions({ headerTitle: title })
@@ -112,14 +84,11 @@ const SearchMessageScreen = props => {
                     const userData = storedUsers[messageData.sentBy]
                     console.log(messageData.text)
                     
-
+                    if (messageData.text == "The message is unsent!") return null;
                     return <DataItem
                                 title={`${userData.firstName} ${userData.lastName}`}
                                 subTitle={messageData.text}
                                 image={userData.profilePicture}
-                                // onPress={() => userPressed(userId)}
-                                // type={isGroupChat ? "checkbox" : ""}
-                                // isChecked={selectedUsers.includes(userId)}
                             />
                 }}
             />

@@ -125,6 +125,12 @@ const ChatSettingsScreen = props => {
             />
             <TouchableOpacity>
                 <DataItem
+                    title="Search messages"
+                    icon="search1"
+                    type="button"
+                    onPress={() => props.navigation.navigate("SearchMessageScreen", { title: "Search messages", chatId})}
+                />
+                <DataItem
                     title="Add users"
                     icon="plus"
                     type="button"
