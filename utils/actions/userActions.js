@@ -75,3 +75,24 @@ export const searchUsers = async (queryText) => {
         throw error;
     }
 }
+export const SearchMessages = async (queryText, chatId) => {
+    const searchTerm = queryText;
+
+    try {
+        const app = getFirebaseApp();
+        const dbRef = ref(getDatabase(app));
+        const userRef = child(dbRef, `messages/${chatId}`);
+        const queryRef = query(userRef, orderByChild('text'), startAt(searchTerm), endAt(searchTerm + "\uf8ff"));
+
+        const snapshot = await get(queryRef);
+
+        if (snapshot.exists()) {
+            return snapshot.val();
+        }
+
+        return {};
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}

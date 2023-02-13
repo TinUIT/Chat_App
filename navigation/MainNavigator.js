@@ -20,6 +20,7 @@ import commonStyles from "../constants/commonStyles";
 import { setStoredUsers } from "../store/userSlice";
 import { setChatMessages, setStarredMessages } from "../store/messagesSlice";
 import ContactScreen from "../screens/ContactScreen";
+import SearchMessageScreen from "../screens/SearchMessageScreen";
 
 // import { TabNavigator } from 'react-navigation';
 
@@ -129,6 +130,18 @@ const StackNavigator = () => {
           options={{
             headerTintColor:'white',
             headerTitle: "Contact info",
+            headerBackTitle: "Back",
+            headerStyle: {
+              backgroundColor: '#1B313E',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="SearchMessageScreen"
+          component={SearchMessageScreen}
+          options={{
+            headerTintColor:'white',
+            headerTitle: "",
             headerBackTitle: "Back",
             headerStyle: {
               backgroundColor: '#1B313E',
