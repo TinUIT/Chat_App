@@ -21,6 +21,7 @@ import { setStoredUsers } from "../store/userSlice";
 import { setChatMessages, setStarredMessages } from "../store/messagesSlice";
 import ContactScreen from "../screens/ContactScreen";
 import SearchMessageScreen from "../screens/SearchMessageScreen";
+import CallScreen from '../screens/CallScreen';
 
 // import { TabNavigator } from 'react-navigation';
 
@@ -151,6 +152,18 @@ const StackNavigator = () => {
         <Stack.Screen
           name="DataList"
           component={DataListScreen}
+          options={{
+            headerTintColor:'white',
+            headerTitle: "",
+            headerBackTitle: "Back",
+            headerStyle: {
+              backgroundColor: '#1B313E',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="CallScreen"
+          component={CallScreen}
           options={{
             headerTintColor:'white',
             headerTitle: "",
